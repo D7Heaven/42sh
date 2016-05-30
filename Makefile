@@ -25,7 +25,7 @@ SRC	:= main.c \
            tree2.c \
            exec.c \
 	   pipe.c \
-	   tree3.c
+	   tree3.c \
 	   builtins/cd.c \
 	   builtins/conf.c \
 	   builtins/env2.c \
