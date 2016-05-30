@@ -5,7 +5,7 @@
 ** Login   <jeanj@epitech.net>
 **
 ** Started on  Tue Apr 12 15:21:34 2016 Jean Jonathan
-** Last update Tue Apr 12 15:24:54 2016 Jean Jonathan
+** Last update Mon May 30 17:11:11 2016 Jean Jonathan
 */
 
 #ifndef PSU_2015_MINISHELL2_SH_H
@@ -25,6 +25,10 @@
 
 #define	BUFF_SIZE       (4096)
 #define MAX_OPS         (5)
+
+struct s_sh;
+
+typedef int (*b_ptr)(struct s_sh *);
 
 typedef struct s_list {
   char		*key;
@@ -49,12 +53,15 @@ typedef struct s_sh {
   t_list        *env;
   char          **av;
   char          **ops;
+  char          **builtins;
+  b_ptr         *builtins_ptr;
   int           error;
   t_tree         *tree;
   t_tree        *actual;
   t_list	*alias;
 } t_sh;
 
+int     init_builtins(t_sh *);
 void    error_tree(t_tree *, t_sh *);
 void    check_redirect(t_tree *);
 void    builtins_exit(t_sh *, int);
@@ -67,8 +74,8 @@ char    **fill_ops();
 int     my_ngetnbr(char *);
 int     my_exec(t_sh *, char *);
 int     check_commands(t_sh *, int, char *, char **);
-int     check_builtins(t_sh *, char *, t_tree *);
-int     check_builtins2(t_sh *);
+int     main_check(t_sh *, char *, t_tree *);
+int     check_builtins(t_sh *, char *);
 char    *getcurpath();
 int     freetab(char **);
 void    exec_tree(t_tree *, t_sh *);

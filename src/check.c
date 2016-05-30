@@ -5,7 +5,7 @@
 ** Login   <jeanj@epitech.net>
 **
 ** Started on  Fri Jan  8 16:24:15 2016 JEAN Jonathan
-** Last update Mon May 30 17:28:44 2016 
+** Last update Mon May 30 17:03:57 2016 Jean Jonathan
 */
 
 #include "sh.h"
@@ -66,37 +66,13 @@ int     check_commands(t_sh *sh, int i, char *path, char **paths)
   return (freetab(sh->av));
 }
 
-int    check_builtins(t_sh *sh, char *name, t_tree *tree)
+int    main_check(t_sh *sh, char *name, t_tree *tree)
 {
   if (check_ops(name, tree) == 0)
     return (0);
-  if (my_strncmp("env", name, 3) == 0)
-    builtins_env(sh);
-  else if (my_strncmp("setenv", name, 6) == 0)
-    builtins_setenv(sh);
-  else if (my_strncmp("cd", name, 2) == 0)
-    builtins_cd(sh);
-  else if (my_strncmp("unsetenv", name, 6) == 0)
-    builtins_unsetenv(sh);
-  else
-    return (check_builtins2(sh));
-  freetab(sh->av);
-  return (0);
-}
-
-int    check_builtins2(t_sh *sh)
-{
-  if (my_strncmp("setalias", sh->av[0], 8) == 0)
-    builtins_setalias(sh);
-  else if (my_strncmp("alias", sh->av[0], 5) == 0)
-    builtins_alias(sh);
-  else if (my_strncmp("reload", sh->av[0], 6) == 0)
-    return (builtins_reload(sh));
-  else if (my_strncmp("unsetalias", sh->av[0], 10) == 0)
-    builtins_unsetalias(sh);
-  else
-    return (check_alias(sh, sh->alias, 1, 0));
-  freetab(sh->av);
+  if (check_builtins(sh, name) == 0)
+    return (0);
+  check_alias(sh, sh->alias, 1, 0);
   return (0);
 }
 
