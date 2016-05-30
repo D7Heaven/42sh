@@ -16,19 +16,20 @@ SRC_DIR	:= src
 OBJ_DIR := obj
 
 SRC	:= main.c \
-           alias.c \
-           builtins.c \
-           builtins2.c \
-           file.c \
-           helper.c \
-           tree.c \
-           check.c \
-           list.c \
-           helper2.c \
-           tree2.c \
-           exec.c \
-	   pipe.c \
-	   tree3.c
+	alias.c \
+	builtins.c \
+	builtins2.c \
+	file.c \
+	helper.c \
+	tree.c \
+	check.c \
+	list.c \
+	helper2.c \
+	tree2.c \
+	exec.c \
+	tree3.c \
+	pipe.c \
+	match.c
 
 SRC	:= $(addprefix $(SRC_DIR)/, $(SRC))
 
