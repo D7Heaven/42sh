@@ -402,6 +402,7 @@ def main():
         print "Usage: norme.py <files_to_scan>"
     if moulin.score:
         print "Note:",-moulin.note,
+        exit(1)
 
 if __name__ == "__main__":
     main()

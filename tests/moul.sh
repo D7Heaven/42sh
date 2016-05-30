@@ -128,7 +128,7 @@ make_manifest()
   echo '  "project": "42sh",'
   echo '  "skills": {'
   i=0
-  for lst in `cat tests | grep "^\[.*\]$" | grep -vi end | sed s/'\['// | sed s/'\]'//`
+  for lst in `cat tests/tests | grep "^\[.*\]$" | grep -vi end | sed s/'\['// | sed s/'\]'//`
   do
   if [ $i -eq 1 ]
   then
@@ -161,7 +161,7 @@ do
   fi
 done
 
-if [ ! -f tests ]
+if [ ! -f tests/tests ]
 then
   echo "No tests file. Please read README.ME" >&2
   exit 1
@@ -193,7 +193,7 @@ fi
 
 if [ $# -eq 0 ]
 then
-  for lst in `cat tests | grep "^\[.*\]$" | grep -vi end | sed s/'\['// | sed s/'\]'//`
+  for lst in `cat tests/tests | grep "^\[.*\]$" | grep -vi end | sed s/'\['// | sed s/'\]'//`
   do
     path_backup=$PATH
     load_test $lst 1
