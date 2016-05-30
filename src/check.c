@@ -5,7 +5,7 @@
 ** Login   <jeanj@epitech.net>
 **
 ** Started on  Fri Jan  8 16:24:15 2016 JEAN Jonathan
-** Last update Tue Apr 12 16:53:09 2016 Jean Jonathan
+** Last update Mon May 30 17:28:44 2016 
 */
 
 #include "sh.h"
@@ -71,23 +71,13 @@ int    check_builtins(t_sh *sh, char *name, t_tree *tree)
   if (check_ops(name, tree) == 0)
     return (0);
   if (my_strncmp("env", name, 3) == 0)
-    print_list(sh->env);
+    builtins_env(sh);
   else if (my_strncmp("setenv", name, 6) == 0)
-    {
-      if (sh->av[1] != NULL)
-	my_setenv(&sh->env, sh->av[1], sh->av[2]);
-      else
-	print_list(sh->env);
-    }
+    builtins_setenv(sh);
   else if (my_strncmp("cd", name, 2) == 0)
-    my_cd(&sh->env, sh->av[1]);
+    builtins_cd(sh);
   else if (my_strncmp("unsetenv", name, 6) == 0)
-    {
-      if (sh->av[1] != NULL)
-	my_unsetenv(&sh->env, sh->av[1], sh);
-      else
-	my_printf("unsetenv [key]\n");
-    }
+    builtins_unsetenv(sh);
   else
     return (check_builtins2(sh));
   freetab(sh->av);
@@ -97,26 +87,13 @@ int    check_builtins(t_sh *sh, char *name, t_tree *tree)
 int    check_builtins2(t_sh *sh)
 {
   if (my_strncmp("setalias", sh->av[0], 8) == 0)
-    {
-      if (sh->av[1] != NULL && sh->av[2] != NULL)
-	my_setalias(&sh->alias, sh->av);
-      else
-	my_printf("setalias [alias] [command]\n");
-    }
+    builtins_setalias(sh);
   else if (my_strncmp("alias", sh->av[0], 5) == 0)
-    print_list(sh->alias);
+    builtins_alias(sh);
   else if (my_strncmp("reload", sh->av[0], 6) == 0)
-    {
-      freetab(sh->av);
-      return (load_rc(sh));
-    }
+    return (builtins_reload(sh));
   else if (my_strncmp("unsetalias", sh->av[0], 10) == 0)
-    {
-      if (sh->av[1] != NULL)
-	my_unsetalias(sh);
-      else
-	my_printf("unsetalias [key]\n");
-    }
+    builtins_unsetalias(sh);
   else
     return (check_alias(sh, sh->alias, 1, 0));
   freetab(sh->av);

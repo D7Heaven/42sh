@@ -5,7 +5,7 @@
 ** Login   <jeanj@epitech.net>
 **
 ** Started on  Tue Apr 12 15:21:34 2016 Jean Jonathan
-** Last update Mon May 30 14:49:03 2016 Remi
+** Last update Tue Apr 12 15:24:54 2016 Jean Jonathan
 */
 
 #ifndef PSU_2015_MINISHELL2_SH_H
@@ -57,7 +57,7 @@ typedef struct s_sh {
 
 void    error_tree(t_tree *, t_sh *);
 void    check_redirect(t_tree *);
-void    my_exit(t_sh *, int);
+void    builtins_exit(t_sh *, int);
 void    free_ops(char **);
 void    treat(t_sh *, char *);
 int     is_base(char);
@@ -93,5 +93,15 @@ int     check_ops(char *, t_tree *);
 t_tree  *create_tree(t_tree *, char *, char **, int);
 void	finish_tree(t_tree *);
 void	create_pipe(t_tree *);
+int	builtins_setenv(t_sh *);
+int	builtins_unsetenv(t_sh *);
+int	builtins_alias(t_sh *);
+int	builtins_reload(t_sh *);
+int	builtins_unsetalias(t_sh *);
+int	builtins_cd(t_sh *);
+int	builtins_env(t_sh *);
+int	builtins_setalias(t_sh *);
+void	my_setalias(t_list **, char **);
+void	my_setalias2(t_list **, char *, char **);
 
 #endif /* PSU_2015_MINISHELL2_SH_H */

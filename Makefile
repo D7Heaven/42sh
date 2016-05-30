@@ -5,7 +5,7 @@
 ## Login   <jeanj@epitech.net>
 ## 
 ## Started on  Tue Apr 12 18:57:02 2016 Jean Jonathan
-## Last update Mon May 30 14:41:45 2016 Remi
+## Last update Mon May 30 10:41:41 2016 Jean Jonathan
 ##
 
 CC=	gcc
@@ -16,9 +16,6 @@ SRC_DIR	:= src
 OBJ_DIR := obj
 
 SRC	:= main.c \
-           alias.c \
-           builtins.c \
-           builtins2.c \
            file.c \
            helper.c \
            tree.c \
@@ -29,6 +26,11 @@ SRC	:= main.c \
            exec.c \
 	   pipe.c \
 	   tree3.c
+	   builtins/cd.c \
+	   builtins/conf.c \
+	   builtins/env2.c \
+	   builtins/env.c \
+	   builtins/exit.c \
 
 SRC	:= $(addprefix $(SRC_DIR)/, $(SRC))
 
