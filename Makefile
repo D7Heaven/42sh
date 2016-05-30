@@ -5,7 +5,7 @@
 ## Login   <jeanj@epitech.net>
 ## 
 ## Started on  Tue Apr 12 18:57:02 2016 Jean Jonathan
-## Last update Mon May 30 10:41:41 2016 Jean Jonathan
+## Last update Mon May 30 17:11:39 2016 Jean Jonathan
 ##
 
 CC=	gcc
@@ -16,6 +16,7 @@ SRC_DIR	:= src
 OBJ_DIR := obj
 
 SRC	:= main.c \
+           builtins.c \
            file.c \
            helper.c \
            tree.c \
