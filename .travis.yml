@@ -1,4 +1,4 @@
 language: c
 install: make
 script:
-    - tests/norme.py
+    - tests/norme.py src/*
