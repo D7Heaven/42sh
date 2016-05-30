@@ -5,13 +5,13 @@
 ** Login   <jeanj@epitech.net>
 **
 ** Started on  Tue Apr 12 15:15:13 2016 Jean Jonathan
-** Last update Mon May 30 14:24:28 2016 tonell_m
+** Last update Mon May 30 14:50:42 2016 tonell_m
 */
 
 #include "sh.h"
 #include "my.h"
 
-int     check_ops2(char *str, t_tree *tree)
+int		check_ops2(char *str, t_tree *tree)
 {
   if (my_strcmp(str, ">") == 0)
     tree->fd[1] = open(tree->right->str, O_RDWR | O_CREAT | O_TRUNC, 0666);
@@ -29,7 +29,7 @@ int     check_ops2(char *str, t_tree *tree)
   return (0);
 }
 
-int     check_ops(char *str, t_tree *tree)
+int		check_ops(char *str, t_tree *tree)
 {
   if (tree->parent != NULL)
     {
@@ -53,9 +53,9 @@ int     check_ops(char *str, t_tree *tree)
     return (check_ops2(str, tree));
 }
 
-void    dad(t_sh *sh, pid_t pid)
+void		dad(t_sh *sh, pid_t pid)
 {
-  int   status;
+  int		status;
 
   if (sh->actual->parent != NULL)
     {
@@ -82,24 +82,27 @@ void    dad(t_sh *sh, pid_t pid)
 
 int    son(t_sh *sh, char *path, char **e)
 {
-  if (sh->actual->parent != NULL) {
-    if (sh->actual->parent->pipe == 1)
-      {
-        if (sh->actual == sh->actual->parent->left)
-          {
-            close(sh->actual->parent->fd[0]);
-            dup2(sh->actual->parent->fd[1], 1);
-          }
-        else if (sh->actual == sh->actual->parent->right) {
-          close(sh->actual->parent->fd[1]);
-          dup2(sh->actual->parent->fd[0], 0);
-        }
-      }
-    else {
-      dup2(sh->actual->parent->fd[0], 0);
-      dup2(sh->actual->parent->fd[1], 1);
+  if (sh->actual->parent != NULL)
+    {
+      if (sh->actual->parent->pipe == 1)
+	{
+	  if (sh->actual == sh->actual->parent->left)
+	    {
+	      close(sh->actual->parent->fd[0]);
+	      dup2(sh->actual->parent->fd[1], 1);
+	    }
+	  else if (sh->actual == sh->actual->parent->right)
+	    {
+	      close(sh->actual->parent->fd[1]);
+	      dup2(sh->actual->parent->fd[0], 0);
+	    }
+	}
+      else
+	{
+	  dup2(sh->actual->parent->fd[0], 0);
+	  dup2(sh->actual->parent->fd[1], 1);
+	}
     }
-  }
   e = envtotab(sh->env);
   if ((execve(path, sh->av, e)) == 0)
     my_delete_list(sh->env);
@@ -108,9 +111,9 @@ int    son(t_sh *sh, char *path, char **e)
   return (0);
 }
 
-int             my_exec(t_sh *sh, char *path)
+int		my_exec(t_sh *sh, char *path)
 {
-  pid_t         pid;
+  pid_t		pid;
 
   if (sh->actual->parent != NULL
       && (sh->actual->parent->fd[0] < 0 || sh->actual->parent->fd[1] < 0))
