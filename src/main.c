@@ -5,7 +5,7 @@
 ** Login   <jeanj@epitech.net>
 **
 ** Started on  Tue Apr 12 14:29:16 2016 Jean Jonathan
-** Last update Tue Apr 12 17:27:39 2016 Jean Jonathan
+** Last update Mon May 30 17:50:22 2016 
 */
 
 #include "my.h"
@@ -87,7 +87,7 @@ int	main(int ac, char *av[], char *e[])
       if (read(0, buff, BUFF_SIZE) > 0)
         treat(&sh, buff);
       else
-        my_exit(&sh, 1);
+        builtins_exit(&sh, 1);
     }
   return (0);
 }
