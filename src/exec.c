@@ -5,13 +5,13 @@
 ** Login   <jeanj@epitech.net>
 **
 ** Started on  Tue Apr 12 15:15:13 2016 Jean Jonathan
-** Last update Tue Apr 12 17:20:44 2016 Jean Jonathan
+** Last update Mon May 30 14:24:28 2016 tonell_m
 */
 
 #include "sh.h"
 #include "my.h"
 
-int     check_ops2(char *str, t_tree *tree)
+int		check_ops2(char *str, t_tree *tree)
 {
   if (my_strcmp(str, ">") == 0)
     tree->fd[1] = open(tree->right->str, O_RDWR | O_CREAT | O_TRUNC, 0666);
@@ -29,7 +29,7 @@ int     check_ops2(char *str, t_tree *tree)
   return (0);
 }
 
-int     check_ops(char *str, t_tree *tree)
+int		check_ops(char *str, t_tree *tree)
 {
   if (tree->parent != NULL)
     {
@@ -52,9 +52,9 @@ int     check_ops(char *str, t_tree *tree)
     return (check_ops2(str, tree));
 }
 
-void    dad(t_sh *sh, pid_t pid)
+void		dad(t_sh *sh, pid_t pid)
 {
-  int   status;
+  int		status;
 
   if (sh->actual->piper_read!= NULL && sh->actual->fd[0] != 0)
     {
@@ -72,11 +72,14 @@ int    son(t_sh *sh, char *path, char **e)
 {
   if (sh->actual->fd[1] != 1)
     {
-      if (sh->actual->piper_write != NULL)
-	close(sh->actual->piper_write->pipe[0]);
-      dup2(sh->actual->fd[1], 1);
+    {
+            close(sh->actual->parent->fd[0]);
+            dup2(sh->actual->parent->fd[1], 1);
+          }
       close(sh->actual->fd[1]);
-    }
+	    {
+	{
+	}
   if (sh->actual->fd[0] != 0)
     {
       if (sh->actual->piper_read != NULL)
@@ -94,9 +97,9 @@ int    son(t_sh *sh, char *path, char **e)
   return (0);
 }
 
-int             my_exec(t_sh *sh, char *path)
+int		my_exec(t_sh *sh, char *path)
 {
-  pid_t         pid;
+  pid_t		pid;
 
   if (sh->actual->parent != NULL
       && (sh->actual->parent->fd[0] < 0 || sh->actual->parent->fd[1] < 0))
