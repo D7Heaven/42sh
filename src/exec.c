@@ -5,7 +5,7 @@
 ** Login   <jeanj@epitech.net>
 **
 ** Started on  Tue Apr 12 15:15:13 2016 Jean Jonathan
-** Last update Tue Apr 12 17:20:44 2016 Jean Jonathan
+** Last update Mon May 30 14:12:18 2016 Remi
 */
 
 #include "sh.h"
@@ -45,8 +45,7 @@ int     check_ops(char *str, t_tree *tree)
     return (0);
   else if (my_strcmp(str, "|") == 0)
     {
-      pipe(tree->fd);
-      tree->pipe = 1;
+      create_pipe(tree);
       return (0);
     }
   else
@@ -57,20 +56,11 @@ void    dad(t_sh *sh, pid_t pid)
 {
   int   status;
 
-  if (sh->actual->parent != NULL) {
-    if (sh->actual->parent->pipe == 1) {
-      if (sh->actual == sh->actual->parent->left)
-        close(sh->actual->parent->fd[1]);
-      else if (sh->actual == sh->actual->parent->right)
-        close(sh->actual->parent->fd[0]);
+  if (sh->actual->piper_read!= NULL && sh->actual->fd[0] != 0)
+    {
+      close(sh->actual->piper_read->pipe[0]);
+      close(sh->actual->piper_read->pipe[1]);
     }
-    else {
-      if (sh->actual->parent->fd[0] != 0)
-        close(sh->actual->parent->fd[0]);
-      if (sh->actual->parent->fd[1] != 1)
-        close(sh->actual->parent->fd[1]);
-    }
-  }
   waitpid(pid, &status, 0);
   if (WTERMSIG(status) == SIGSEGV)
     write(2, "Segmentation Fault\n", 19);
@@ -79,24 +69,22 @@ void    dad(t_sh *sh, pid_t pid)
 
 int    son(t_sh *sh, char *path, char **e)
 {
-  if (sh->actual->parent != NULL) {
-    if (sh->actual->parent->pipe == 1)
-      {
-        if (sh->actual == sh->actual->parent->left)
-          {
-            close(sh->actual->parent->fd[0]);
-            dup2(sh->actual->parent->fd[1], 1);
-          }
-        else if (sh->actual == sh->actual->parent->right) {
-          close(sh->actual->parent->fd[1]);
-          dup2(sh->actual->parent->fd[0], 0);
-        }
-      }
-    else {
-      dup2(sh->actual->parent->fd[0], 0);
-      dup2(sh->actual->parent->fd[1], 1);
+  if (sh->actual->fd[1] != 1)
+    {
+      if (sh->actual->piper_write != NULL)
+	close(sh->actual->piper_write->pipe[0]);
+      dup2(sh->actual->fd[1], 1);
+      close(sh->actual->fd[1]);
     }
-  }
+  if (sh->actual->fd[0] != 0)
+    {
+      if (sh->actual->piper_read != NULL)
+	close(sh->actual->piper_read->pipe[1]);
+      if (sh->actual->fd[0] == -1)
+	exit(0);
+      dup2(sh->actual->fd[0], 0);
+      close(sh->actual->fd[0]);
+    }
   e = envtotab(sh->env);
   if ((execve(path, sh->av, e)) == 0)
     my_delete_list(sh->env);

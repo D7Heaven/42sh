@@ -5,7 +5,7 @@
 ** Login   <jeanj@epitech.net>
 **
 ** Started on  Tue Apr 12 14:34:45 2016 Jean Jonathan
-** Last update Tue Apr 12 15:28:43 2016 Jean Jonathan
+** Last update Mon May 30 13:32:40 2016 Remi
 */
 
 #include "my.h"
@@ -94,7 +94,10 @@ t_tree          *create_tree(t_tree *parent, char *str, char **ops, int end)
   if ((i = find_op(tree, str, end, ops)) == -1)
     tree->str = my_strdup(str);
   tree->parent = parent;
-  tree->pipe = 0;
+  tree->piper_write = NULL;
+  tree->piper_read = NULL;
+  tree->pipe[0] = 0;
+  tree->pipe[1] = 0;
   tree->fd[0] = 0;
   tree->fd[1] = 1;
   tree->str = epur_str(tree->str);

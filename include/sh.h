@@ -5,7 +5,7 @@
 ** Login   <jeanj@epitech.net>
 **
 ** Started on  Tue Apr 12 15:21:34 2016 Jean Jonathan
-** Last update Tue Apr 12 15:24:54 2016 Jean Jonathan
+** Last update Mon May 30 13:18:17 2016 Remi
 */
 
 #ifndef PSU_2015_MINISHELL2_SH_H
@@ -36,10 +36,12 @@ typedef struct s_tree
 {
   char          *str;
   int           fd[2];
-  int           pipe;
+  int           pipe[2];
   struct s_tree *parent;
   struct s_tree *left;
   struct s_tree *right;
+  struct s_tree *piper_write;
+  struct s_tree *piper_read;
 } t_tree;
 
 typedef struct s_sh {
