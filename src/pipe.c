@@ -5,7 +5,7 @@
 ** Login   <arnoulr@epitech.net>
 **
 ** Started on  Mon May 30 13:26:20 2016 Remi
-** Last update Mon May 30 14:25:42 2016 Remi
+** Last update Mon May 30 14:34:18 2016 Remi
 */
 
 #include "sh.h"
@@ -34,13 +34,13 @@ void            create_pipe(t_tree *ast)
       else
 	cmd_tmp = cmd_tmp->right;
     }
-    printf("right : %s, left : %s\n", tmp->str, cmd_tmp->str);
   pipe(ast->pipe);
   cmd_tmp->piper_write = ast;
   tmp->piper_read = ast;
   cmd_tmp->fd[1] = ast->pipe[1];
   tmp->fd[0] = ast->pipe[0];
 }
+
 /*
 void            create_new2(t_ast **tmp, t_ast **cmd_tmp, char *new, int i)
 {

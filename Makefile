@@ -5,7 +5,7 @@
 ## Login   <jeanj@epitech.net>
 ## 
 ## Started on  Tue Apr 12 18:57:02 2016 Jean Jonathan
-## Last update Mon May 30 13:42:31 2016 Remi
+## Last update Mon May 30 14:41:45 2016 Remi
 ##
 
 CC=	gcc
@@ -27,7 +27,8 @@ SRC	:= main.c \
            helper2.c \
            tree2.c \
            exec.c \
-	   pipe.c
+	   pipe.c \
+	   tree3.c
 
 SRC	:= $(addprefix $(SRC_DIR)/, $(SRC))
 

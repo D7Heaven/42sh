@@ -5,7 +5,7 @@
 ** Login   <jeanj@epitech.net>
 **
 ** Started on  Tue Apr 12 14:34:45 2016 Jean Jonathan
-** Last update Mon May 30 13:32:40 2016 Remi
+** Last update Mon May 30 14:41:20 2016 Remi
 */
 
 #include "my.h"
@@ -109,9 +109,6 @@ t_tree          *create_tree(t_tree *parent, char *str, char **ops, int end)
     tree->right = create_tree(tree, str + i, ops, my_strlen(str + i));
   }
   else
-    {
-      tree->left = NULL;
-      tree->right = NULL;
-    }
+    finish_tree(tree);
   return (tree);
 }
