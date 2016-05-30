@@ -5,7 +5,7 @@
 ** Login   <tonell-m@epitech.net>
 **
 ** Started on  Mon May 30 15:47:22 2016 tonell_m
-** Last update Mon May 30 16:25:03 2016 tonell_m
+** Last update Mon May 30 17:20:03 2016 tonell_m
 */
 
 #include "sh.h"
@@ -13,7 +13,6 @@
 
 char		*glob_path(char *arg)
 {
-  char		tmp;
   char		*path;
   int		i;
 
@@ -21,20 +20,29 @@ char		*glob_path(char *arg)
   while (arg[i] != '/' && i >= 0)
     i--;
   if (i == 0)
-    return (my_strdup("./"));
-  tmp = arg[i + 1];
-  arg[i + 1] = 0;
+    return (my_strdup("."));
+  arg[i] = 0;
   path = my_strdup(arg);
-  arg[i + 1] = tmp;
+  arg[i] = '/';
+  return (path);
 }
 
 int		glob(t_sh *sh, char *path, int _av, int idx)
 {
+  char		*gpath;
+  DIR		*dirp;
   int		cur_idx;
 
+  gpath = glob_path(sh->av[_av]);
+  if ((dirp = opendir(gpath)) == NULL)
+    {
+      my_printf("%s: No such file or dirrectory\n", gpath);
+      return (-1);
+    }
   cur_idx = 0;
   while (cur_idx < idx)
     {
+
       cur_idx++;
     }
 }
