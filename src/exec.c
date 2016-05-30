@@ -5,7 +5,7 @@
 ** Login   <jeanj@epitech.net>
 **
 ** Started on  Tue Apr 12 15:15:13 2016 Jean Jonathan
-** Last update Tue Apr 12 17:20:44 2016 Jean Jonathan
+** Last update Mon May 30 14:24:28 2016 tonell_m
 */
 
 #include "sh.h"
@@ -57,20 +57,23 @@ void    dad(t_sh *sh, pid_t pid)
 {
   int   status;
 
-  if (sh->actual->parent != NULL) {
-    if (sh->actual->parent->pipe == 1) {
-      if (sh->actual == sh->actual->parent->left)
-        close(sh->actual->parent->fd[1]);
-      else if (sh->actual == sh->actual->parent->right)
-        close(sh->actual->parent->fd[0]);
+  if (sh->actual->parent != NULL)
+    {
+      if (sh->actual->parent->pipe == 1)
+	{
+	  if (sh->actual == sh->actual->parent->left)
+	    close(sh->actual->parent->fd[1]);
+	  else if (sh->actual == sh->actual->parent->right)
+	    close(sh->actual->parent->fd[0]);
+	}
+      else
+	{
+	  if (sh->actual->parent->fd[0] != 0)
+	    close(sh->actual->parent->fd[0]);
+	  if (sh->actual->parent->fd[1] != 1)
+	    close(sh->actual->parent->fd[1]);
+	}
     }
-    else {
-      if (sh->actual->parent->fd[0] != 0)
-        close(sh->actual->parent->fd[0]);
-      if (sh->actual->parent->fd[1] != 1)
-        close(sh->actual->parent->fd[1]);
-    }
-  }
   waitpid(pid, &status, 0);
   if (WTERMSIG(status) == SIGSEGV)
     write(2, "Segmentation Fault\n", 19);
