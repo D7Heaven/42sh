@@ -5,7 +5,7 @@
 ** Login   <arnoulr@epitech.net>
 **
 ** Started on  Mon May 30 13:26:20 2016 Remi
-** Last update Mon May 30 14:34:18 2016 Remi
+** Last update Mon May 30 14:38:42 2016 Remi
 */
 
 #include "sh.h"
@@ -17,10 +17,8 @@ void            create_pipe(t_tree *ast)
 
   tmp = ast->right;
   cmd_tmp = ast->left;
-  while (my_strcmp(tmp->str, "|") == 0 ||
-	 my_strcmp(tmp->str, ">") == 0 ||
-	 my_strcmp(tmp->str, ">>") == 0 ||
-	 my_strcmp(tmp->str, "<") == 0 ||
+  while (my_strcmp(tmp->str, "|") == 0 || my_strcmp(tmp->str, ">") == 0 ||
+	 my_strcmp(tmp->str, ">>") == 0 || my_strcmp(tmp->str, "<") == 0 ||
 	 my_strcmp(tmp->str, "<<") == 0)
     tmp = tmp->left;
   while (my_strcmp(cmd_tmp->str, "|") == 0 ||
