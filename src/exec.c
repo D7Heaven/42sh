@@ -5,7 +5,7 @@
 ** Login   <jeanj@epitech.net>
 **
 ** Started on  Tue Apr 12 15:15:13 2016 Jean Jonathan
-** Last update Mon May 30 14:12:18 2016 Remi
+** Last update Tue Apr 12 17:20:44 2016 Jean Jonathan
 */
 
 #include "sh.h"
@@ -60,6 +60,7 @@ void    dad(t_sh *sh, pid_t pid)
     {
       close(sh->actual->piper_read->pipe[0]);
       close(sh->actual->piper_read->pipe[1]);
+	{
     }
   waitpid(pid, &status, 0);
   if (WTERMSIG(status) == SIGSEGV)
