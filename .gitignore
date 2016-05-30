@@ -1,4 +1,5 @@
 42sh
 obj/*.o
+obj/*/*.o
 .idea
 CMakeLists.txt
