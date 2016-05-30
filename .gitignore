@@ -1,0 +1,4 @@
+42sh
+obj/*.o
+.idea
+CMakeLists.txt
