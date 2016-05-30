@@ -60,6 +60,7 @@ void		dad(t_sh *sh, pid_t pid)
     {
       close(sh->actual->piper_read->pipe[0]);
       close(sh->actual->piper_read->pipe[1]);
+
     }
   waitpid(pid, &status, 0);
   if (WTERMSIG(status) == SIGSEGV)
@@ -70,6 +71,7 @@ void		dad(t_sh *sh, pid_t pid)
 int    son(t_sh *sh, char *path, char **e)
 {
   if (sh->actual->fd[1] != 1)
+    {
     {
       close(sh->actual->parent->fd[0]);
       dup2(sh->actual->parent->fd[1], 1);
