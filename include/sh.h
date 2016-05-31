@@ -5,7 +5,7 @@
 ** Login   <jeanj@epitech.net>
 **
 ** Started on  Tue Apr 12 15:21:34 2016 Jean Jonathan
-** Last update Tue May 31 14:44:14 2016 Jean Jonathan
+** Last update Tue May 31 16:19:01 2016 Jean Jonathan
 */
 
 #ifndef PSU_2015_MINISHELL2_SH_H
@@ -116,6 +116,8 @@ int	builtins_echo(t_sh *);
 int     add_history(t_sh *, char *);
 int		globbing(t_sh *, char *);
 char            *glob_path(char *);
+int     clear_history(t_sh *);
+int     read_history(t_sh *);
 DIR             *my_opendir(char *);
 int             is_wildcard(char *);
 char            **get_wildcard_param(t_sh *, char *, int);
