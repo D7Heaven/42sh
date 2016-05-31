@@ -5,7 +5,7 @@
 ** Login   <arnoulr@epitech.net>
 **
 ** Started on  Mon May 30 13:26:20 2016 Remi
-** Last update Tue May 31 16:07:27 2016 Remi
+** Last update Tue May 31 16:19:23 2016 Remi
 */
 
 #include "sh.h"
@@ -61,8 +61,10 @@ void            create_pipe(t_tree *ast)
 
 void            create_new2(t_tree **tmp, t_tree **cmd_tmp, char *new, int i)
 {
-  while (my_strcmp(cmd_tmp[0]->str, "|") == 0 || my_strcmp(cmd_tmp[0]->str, ">") == 0 ||
-	 my_strcmp(cmd_tmp[0]->str, ">>") == 0 || my_strcmp(cmd_tmp[0]->str, "<") == 0 ||
+  while (my_strcmp(cmd_tmp[0]->str, "|") == 0
+	 || my_strcmp(cmd_tmp[0]->str, ">") == 0 ||
+	 my_strcmp(cmd_tmp[0]->str, ">>") == 0
+	 || my_strcmp(cmd_tmp[0]->str, "<") == 0 ||
 	 my_strcmp(cmd_tmp[0]->str, "<<") == 0)
     {
       if (my_strcmp(cmd_tmp[0]->str, "<") == 0)
@@ -70,12 +72,11 @@ void            create_new2(t_tree **tmp, t_tree **cmd_tmp, char *new, int i)
       else
 	cmd_tmp[0] = cmd_tmp[0]->right;
     }
-
-  if (my_strcmp(tmp[0]->str, "|") == 0 ||
-	 my_strcmp(tmp[0]->str, ">") == 0 ||
+  if (my_strcmp(tmp[0]->str, "|") == 0 || my_strcmp(tmp[0]->str, ">") == 0 ||
 	 my_strcmp(tmp[0]->str, ">>") == 0 ||
 	 my_strcmp(tmp[0]->str, "<") == 0 ||
-	 my_strcmp(tmp[0]->str, "<<") == 0 || my_strcmp(cmd_tmp[0]->str, tmp[0]->str) == 0)
+	 my_strcmp(tmp[0]->str, "<<") == 0
+      || my_strcmp(cmd_tmp[0]->str, tmp[0]->str) == 0)
     {
 
       while (tmp[0]->str[i] != ' ' && tmp[0]->str[i] != '\0')
@@ -121,17 +122,10 @@ void            open_new_file(t_tree *ast)
   i = 0;
   tmp = ast->right;
   cmd_tmp = ast->left;
-  while (my_strcmp(tmp->str, "|") == 0 || my_strcmp(tmp->str, ">") == 0 ||
-	 my_strcmp(tmp->str, ">>") == 0 || my_strcmp(tmp->str, "<") == 0 ||
-	 my_strcmp(tmp->str, "<<") == 0)
-    tmp = tmp->left;
-  while (my_strcmp(cmd_tmp->str, "|") == 0 || my_strcmp(cmd_tmp->str, ">") == 0 ||
-	 my_strcmp(cmd_tmp->str, ">>") == 0 || my_strcmp(cmd_tmp->str, "<") == 0 ||
-	 my_strcmp(cmd_tmp->str, "<<") == 0)
-    cmd_tmp = cmd_tmp->right;
+  open_new_file2(tmp, cmd_tmp);
   if (my_strcmp(tmp->str, "|") != 0 && my_strcmp(tmp->str, ">") != 0 &&
-	 my_strcmp(tmp->str, ">>") != 0 && my_strcmp(tmp->str, "<") != 0 &&
-	 my_strcmp(tmp->str, "<<") != 0)
+      my_strcmp(tmp->str, ">>") != 0 && my_strcmp(tmp->str, "<") != 0 &&
+      my_strcmp(tmp->str, "<<") != 0)
     if (cmd_tmp->str[0] == '|' || cmd_tmp->str[0] == '>' ||
 	cmd_tmp->str[0] == '<' || my_strcmp(cmd_tmp->str, tmp->str) == 0)
       {

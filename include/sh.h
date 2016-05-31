@@ -5,7 +5,7 @@
 ** Login   <jeanj@epitech.net>
 **
 ** Started on  Tue Apr 12 15:21:34 2016 Jean Jonathan
-** Last update Tue May 31 16:06:48 2016 Remi
+** Last update Tue May 31 16:23:16 2016 Remi
 */
 
 #ifndef PSU_2015_MINISHELL2_SH_H
@@ -96,6 +96,8 @@ void	finish_tree(t_tree *);
 void	create_pipe(t_tree *);
 void	create_new_file(t_tree *);
 void	open_new_file(t_tree *);
+void	open_new_file2(t_tree *, t_tree*);
 int	return_exec_success(t_sh *);
+void	init_tree(t_tree *);
 
 #endif /* PSU_2015_MINISHELL2_SH_H */

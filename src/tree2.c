@@ -5,11 +5,22 @@
 ** Login   <jeanj@epitech.net>
 **
 ** Started on  Tue Apr 12 14:37:30 2016 Jean Jonathan
-** Last update Tue May 31 15:51:51 2016 Remi
+** Last update Tue May 31 16:22:31 2016 Remi
 */
 
 #include "sh.h"
 #include "my.h"
+
+void	init_tree(t_tree *tree)
+{
+  tree->piper_write = NULL;
+  tree->piper_read = NULL;
+  tree->success = -1;
+  tree->pipe[0] = 0;
+  tree->pipe[1] = 0;
+  tree->fd[0] = 0;
+  tree->fd[1] = 1;
+}
 
 void    exec_tree(t_tree *tree, t_sh *sh)
 {
@@ -26,7 +37,8 @@ void    exec_tree(t_tree *tree, t_sh *sh)
 	exec_tree(tree->right, sh);
       else if (my_strcmp(tree->str, "&&") == 0 && tree->success == 1)
 	exec_tree(tree->right, sh);
-      else  if (my_strcmp(tree->str, "||") != 0 && my_strcmp(tree->str, "&&") != 0)
+      else  if (my_strcmp(tree->str, "||") != 0
+		&& my_strcmp(tree->str, "&&") != 0)
 	exec_tree(tree->right, sh);
     }
 }
