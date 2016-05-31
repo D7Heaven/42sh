@@ -5,7 +5,7 @@
 ** Login   <jeanj@epitech.net>
 **
 ** Started on  Tue Apr 12 15:15:13 2016 Jean Jonathan
-** Last update Mon May 30 14:12:18 2016 Remi
+** Last update Tue May 31 16:05:04 2016 Remi
 */
 
 #include "sh.h"
@@ -14,11 +14,11 @@
 int     check_ops2(char *str, t_tree *tree)
 {
   if (my_strcmp(str, ">") == 0)
-    tree->fd[1] = open(tree->right->str, O_RDWR | O_CREAT | O_TRUNC, 0666);
+    create_new_file(tree);
   else if (my_strcmp(str, ">>") == 0)
-    tree->fd[1] = open(tree->right->str, O_RDWR | O_CREAT | O_APPEND, 0666);
+    create_new_file(tree);
   else if (my_strcmp(str, "<") == 0)
-    tree->fd[0] = open(tree->right->str, O_RDWR, 0666);
+    open_new_file(tree);
   else
     return (1);
   if (tree->fd[1] < 0)
@@ -43,6 +43,10 @@ int     check_ops(char *str, t_tree *tree)
     }
   if (my_strcmp(str, ";") == 0)
     return (0);
+  else if (my_strcmp(str, "&&") == 0)
+    return (0);
+  else if (my_strcmp(str, "||") == 0)
+    return (0);
   else if (my_strcmp(str, "|") == 0)
     {
       create_pipe(tree);
@@ -55,13 +59,19 @@ int     check_ops(char *str, t_tree *tree)
 void    dad(t_sh *sh, pid_t pid)
 {
   int   status;
+  char	buff[5];
 
+  my_memset(buff, 0, 5);
   if (sh->actual->piper_read!= NULL && sh->actual->fd[0] != 0)
     {
       close(sh->actual->piper_read->pipe[0]);
       close(sh->actual->piper_read->pipe[1]);
     }
   waitpid(pid, &status, 0);
+  if (WIFEXITED(status))
+      return_exec_success(sh);
+  sprintf(buff, "%d", WEXITSTATUS(status));
+  my_setenv(&sh->env, "?", buff);
   if (WTERMSIG(status) == SIGSEGV)
     write(2, "Segmentation Fault\n", 19);
   freetab(sh->av);

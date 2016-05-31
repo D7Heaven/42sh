@@ -5,7 +5,7 @@
 ## Login   <jeanj@epitech.net>
 ## 
 ## Started on  Tue Apr 12 18:57:02 2016 Jean Jonathan
-## Last update Mon May 30 17:11:39 2016 Jean Jonathan
+## Last update Mon May 30 14:41:45 2016 Remi
 ##
 
 CC=	gcc
@@ -27,7 +27,7 @@ SRC	:= main.c \
            exec.c \
 	   pipe.c \
 	   tree3.c \
-	   builtins/alias.c \
+	   et_ou.c
 	   builtins/alias2.c \
 	   builtins/cd.c \
 	   builtins/conf.c \

@@ -5,10 +5,30 @@
 ** Login   <arnoulr@epitech.net>
 **
 ** Started on  Mon May 30 13:26:20 2016 Remi
-** Last update Mon May 30 14:38:42 2016 Remi
+** Last update Tue May 31 16:19:23 2016 Remi
 */
 
 #include "sh.h"
+
+char            *my_strdup_pure(char *str)
+{
+  char          *s;
+  int           i;
+
+  i = 0;
+  while ((str[i] == ' ' || str[i] == '\v'
+	  || str[i] == '\t' || str[i] == '\n') && str[i] != '\0')
+    i++;
+  if (i == my_strlen(str))
+    return (NULL);
+  s = my_strdup(&str[i]);
+  i = my_strlen(s) - 1;
+  while ((s[i] == ' ' || s[i] == '\n' || str[i] == '\v'
+	  || str[i] == '\t') && i >= 0)
+    i--;
+  s[i + 1] = '\0';
+  return (s);
+}
 
 void            create_pipe(t_tree *ast)
 {
@@ -39,49 +59,83 @@ void            create_pipe(t_tree *ast)
   tmp->fd[0] = ast->pipe[0];
 }
 
-/*
-void            create_new2(t_ast **tmp, t_ast **cmd_tmp, char *new, int i)
+void            create_new2(t_tree **tmp, t_tree **cmd_tmp, char *new, int i)
 {
-  while (cmd_tmp[0]->operand != 0)
+  while (my_strcmp(cmd_tmp[0]->str, "|") == 0
+	 || my_strcmp(cmd_tmp[0]->str, ">") == 0 ||
+	 my_strcmp(cmd_tmp[0]->str, ">>") == 0
+	 || my_strcmp(cmd_tmp[0]->str, "<") == 0 ||
+	 my_strcmp(cmd_tmp[0]->str, "<<") == 0)
     {
-      if (cmd_tmp[0]->operand == '<')
+      if (my_strcmp(cmd_tmp[0]->str, "<") == 0)
 	cmd_tmp[0] = cmd_tmp[0]->left;
       else
 	cmd_tmp[0] = cmd_tmp[0]->right;
     }
-
-  if (cmd_tmp[0]->cmd == NULL || my_strcmp(cmd_tmp[0]->cmd, tmp[0]->cmd) == 0)
+  if (my_strcmp(tmp[0]->str, "|") == 0 || my_strcmp(tmp[0]->str, ">") == 0 ||
+	 my_strcmp(tmp[0]->str, ">>") == 0 ||
+	 my_strcmp(tmp[0]->str, "<") == 0 ||
+	 my_strcmp(tmp[0]->str, "<<") == 0
+      || my_strcmp(cmd_tmp[0]->str, tmp[0]->str) == 0)
     {
 
-      while (tmp[0]->cmd[i] != ' ' && tmp[0]->cmd[i] != '\0')
+      while (tmp[0]->str[i] != ' ' && tmp[0]->str[i] != '\0')
 	i++;
-      cmd_tmp[0]->cmd = my_strdup_pure(&tmp[0]->cmd[i]);
-      new = my_strdup_pure(tmp[0]->cmd);
+      cmd_tmp[0]->str = my_strdup_pure(&tmp[0]->str[i]);
+      new = my_strdup_pure(tmp[0]->str);
       new[i] = '\0';
-      tmp[0]->cmd = new;
+      tmp[0]->str = new;
     }
-
 }
 
-void            create_new_file(t_ast *ast)
+void            create_new_file(t_tree *ast)
 {
-  t_ast         *tmp;
-  t_ast         *cmd_tmp;
+  t_tree	*tmp;
+  t_tree	*cmd_tmp;
   char          *new;
   int           i;
 
   i = 0;
   tmp = ast->right;
   cmd_tmp = ast->left;
-  while (tmp->operand != 0)
+  while (my_strcmp(tmp->str, "|") == 0 || my_strcmp(tmp->str, ">") == 0 ||
+	 my_strcmp(tmp->str, ">>") == 0 || my_strcmp(tmp->str, "<") == 0 ||
+	 my_strcmp(tmp->str, "<<") == 0)
     tmp = tmp->left;
-  tmp->done = 1;
+  new = NULL;
   create_new2(&tmp, &cmd_tmp, new, i);
-  if (tmp->cmd != NULL && ast->operand == '>')
-    cmd_tmp->fd = open((const char *)(tmp->cmd), O_RDWR
+  if (my_strcmp(ast->str, ">") == 0)
+    cmd_tmp->fd[1] = open((const char *)(tmp->str), O_RDWR
 		       | O_CREAT | O_TRUNC, 0644);
-  else if (tmp->cmd != NULL)
-    cmd_tmp->fd = open((const char *)(tmp->cmd), O_RDWR | O_CREAT
+  else
+    cmd_tmp->fd[1] = open((const char *)(tmp->str), O_RDWR | O_CREAT
 		       | O_APPEND, 0644);
 }
-*/
+
+void            open_new_file(t_tree *ast)
+{
+  t_tree	*tmp;
+  t_tree	*cmd_tmp;
+  int           i;
+  char          *new;
+
+  i = 0;
+  tmp = ast->right;
+  cmd_tmp = ast->left;
+  open_new_file2(tmp, cmd_tmp);
+  if (my_strcmp(tmp->str, "|") != 0 && my_strcmp(tmp->str, ">") != 0 &&
+      my_strcmp(tmp->str, ">>") != 0 && my_strcmp(tmp->str, "<") != 0 &&
+      my_strcmp(tmp->str, "<<") != 0)
+    if (cmd_tmp->str[0] == '|' || cmd_tmp->str[0] == '>' ||
+	cmd_tmp->str[0] == '<' || my_strcmp(cmd_tmp->str, tmp->str) == 0)
+      {
+	while (tmp->str[i] != ' ' && tmp->str[i] != '\0')
+	  i++;
+	cmd_tmp->str = my_strdup_pure(&tmp->str[i]);
+	new = my_strdup_pure(tmp->str);
+	new[i] = '\0';
+	tmp->str = new;
+      }
+  if (tmp->str != NULL && my_strcmp(ast->str, "<") == 0)
+    cmd_tmp->fd[0] = open((const char *)(tmp->str), O_RDONLY);
+}
