@@ -5,7 +5,7 @@
 ** Login   <jeanj@epitech.net>
 **
 ** Started on  Tue Apr 12 14:37:30 2016 Jean Jonathan
-** Last update Tue May 31 09:57:45 2016 Remi
+** Last update Tue May 31 15:51:51 2016 Remi
 */
 
 #include "sh.h"
@@ -21,7 +21,13 @@ void    exec_tree(t_tree *tree, t_sh *sh)
   if (tree->left != NULL && tree->right != NULL)
     {
       exec_tree(tree->left, sh);
-      exec_tree(tree->right, sh);
+
+      if (my_strcmp(tree->str, "||") == 0 && tree->success == -1)
+	exec_tree(tree->right, sh);
+      else if (my_strcmp(tree->str, "&&") == 0 && tree->success == 1)
+	exec_tree(tree->right, sh);
+      else  if (my_strcmp(tree->str, "||") != 0 && my_strcmp(tree->str, "&&") != 0)
+	exec_tree(tree->right, sh);
     }
 }
 

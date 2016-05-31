@@ -5,7 +5,7 @@
 ** Login   <arnoulr@epitech.net>
 **
 ** Started on  Mon May 30 13:26:20 2016 Remi
-** Last update Tue May 31 09:53:03 2016 Remi
+** Last update Tue May 31 16:07:27 2016 Remi
 */
 
 #include "sh.h"
@@ -101,6 +101,7 @@ void            create_new_file(t_tree *ast)
 	 my_strcmp(tmp->str, ">>") == 0 || my_strcmp(tmp->str, "<") == 0 ||
 	 my_strcmp(tmp->str, "<<") == 0)
     tmp = tmp->left;
+  new = NULL;
   create_new2(&tmp, &cmd_tmp, new, i);
   if (my_strcmp(ast->str, ">") == 0)
     cmd_tmp->fd[1] = open((const char *)(tmp->str), O_RDWR

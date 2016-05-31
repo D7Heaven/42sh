@@ -5,7 +5,7 @@
 ** Login   <jeanj@epitech.net>
 **
 ** Started on  Tue Apr 12 14:34:45 2016 Jean Jonathan
-** Last update Mon May 30 14:41:20 2016 Remi
+** Last update Tue May 31 15:09:07 2016 Remi
 */
 
 #include "my.h"
@@ -96,6 +96,7 @@ t_tree          *create_tree(t_tree *parent, char *str, char **ops, int end)
   tree->parent = parent;
   tree->piper_write = NULL;
   tree->piper_read = NULL;
+  tree->success = -1;
   tree->pipe[0] = 0;
   tree->pipe[1] = 0;
   tree->fd[0] = 0;

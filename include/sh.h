@@ -5,7 +5,7 @@
 ** Login   <jeanj@epitech.net>
 **
 ** Started on  Tue Apr 12 15:21:34 2016 Jean Jonathan
-** Last update Mon May 30 14:49:03 2016 Remi
+** Last update Tue May 31 16:06:48 2016 Remi
 */
 
 #ifndef PSU_2015_MINISHELL2_SH_H
@@ -24,7 +24,7 @@
 #include "my.h"
 
 #define	BUFF_SIZE       (4096)
-#define MAX_OPS         (5)
+#define MAX_OPS         (7)
 
 typedef struct s_list {
   char		*key;
@@ -38,6 +38,7 @@ typedef struct s_tree
   char          *str;
   int           fd[2];
   int           pipe[2];
+  char		success;
   struct s_tree *parent;
   struct s_tree *left;
   struct s_tree *right;
@@ -93,5 +94,8 @@ int     check_ops(char *, t_tree *);
 t_tree  *create_tree(t_tree *, char *, char **, int);
 void	finish_tree(t_tree *);
 void	create_pipe(t_tree *);
+void	create_new_file(t_tree *);
+void	open_new_file(t_tree *);
+int	return_exec_success(t_sh *);
 
 #endif /* PSU_2015_MINISHELL2_SH_H */
