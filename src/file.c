@@ -5,7 +5,7 @@
 ** Login   <jeanj@epitech.net>
 **
 ** Started on  Fri Jan  8 18:34:45 2016 JEAN Jonathan
-** Last update Tue May 31 16:18:49 2016 Jean Jonathan
+** Last update Tue May 31 16:42:40 2016 Jean Jonathan
 */
 
 #include "sh.h"
@@ -44,7 +44,9 @@ int     read_history(t_sh *sh)
   char	*str;
   char	*home;
   char	*read;
+  int   i;
 
+  i =0;
   read = NULL;
   if ((home = my_getenv(sh->env, "HOME")) == NULL)
     return (my_printf("Can't locate HOME variable\n"));
@@ -52,15 +54,14 @@ int     read_history(t_sh *sh)
   my_memset(str, 0, my_strlen(home) + 12);
   my_strcpy(str, home);
   my_strcat(str, "/.42history");
-  fd = open(str, O_RDONLY);
-  free(str);
-  if (fd == -1)
+  if ((fd = open(str, O_RDONLY)) == -1)
     return (1);
+  free(str);
   while ((read = get_next_line(fd)) != NULL)
     {
-      if (read[0] != '\0')
-        printf("%s\n", read);
+      printf("%d - %s\n", i, read);
       free(read);
+      i++;
     }
   close(fd);
   return (0);
@@ -90,7 +91,6 @@ int     add_history(t_sh *sh, char *add)
 
 int     clear_history(t_sh *sh)
 {
-  int	fd;
   char	*home;
   char  *str;
 
@@ -102,4 +102,5 @@ int     clear_history(t_sh *sh)
   my_strcat(str, "/.42history");
   remove(str);
   free(str);
+  return (0);
 }
