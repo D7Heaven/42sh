@@ -5,7 +5,7 @@
 ** Login   <bedel_a@epitech.net>
 **
 ** Started on  Tue May 31 15:26:33 2016
-** Last update Tue May 31 16:54:29 2016 
+** Last update Tue May 31 17:53:12 2016 
 */
 
 #include "sh.h"
@@ -32,11 +32,13 @@ int		check_parentheses(char *str)
   return (0);
 }
 
-void		print_arg(char *str, int idx)
+int		print_arg(char *str, int idx)
 {
   int		i;
 
   i = 0;
+  if (str[0] == '$')
+    return (-1);
   while (str[i] != '\0')
     {
       if (str[i] != '\'' && str[i] != '\"')
@@ -47,45 +49,51 @@ void		print_arg(char *str, int idx)
     write(1, " ", 1);
   else if (idx == 1)
     write(1, "\n", 1);
+  return (0);
 }
 
-int		do_the_rest(char **av, int idx)
+int		dollar(char *str, t_list *env, int idx, int idx_n)
+{
+  char		*res;
+
+  if (str[0] == '$')
+    {
+      if ((res = my_getenv(env, &str[1])) == NULL)
+	printf("%s: Undefined variable.\n", &str[1]);
+      else if (idx == 0)
+	printf("%s ", res);
+      else
+	{
+	  if (idx_n == 1)
+	    my_printf("%s", res);
+	  else
+	    printf("%s\n", res);
+	}
+      return (0);
+    }
+  return (-1);
+}
+
+int		do_the_rest(char **av, int idx_n, t_list *env)
 {
   int		i;
+  int		idx;
 
   i = 1;
   while (av[i + 1] != NULL)
     {
-      if (check_parentheses(av[i]) == 0)
+      idx = dollar(av[i], env, 0, idx_n);
+      if (check_parentheses(av[i]) == 0 && idx == -1)
 	print_arg(av[i], 0);
-      else
+      else if (idx == -1)
 	printf("Undefined quote ");
       i++;
     }
-  if (check_parentheses(av[i]) == 0)
-    print_arg(av[i], 1 + idx);
-  else
+  idx = dollar(av[i], env, 1, idx_n);
+  if (check_parentheses(av[i]) == 0 && idx == -1)
+    print_arg(av[i], 1 + idx_n);
+  else if (idx == -1)
     printf("Undefined quote\n");
-  return (0);
-}
-
-int		dollar(char **av, t_list *env)
-{
-  int		i;
-  char		*res;
-
-  i = 0;
-  while (av[i] != NULL)
-    {
-      if (av[i][0] == '$')
-	{
-	  if ((res = my_getenv(env, &av[i][1])) == NULL)
-	    printf("%s: Undefined variable.\n", &av[i][1]);
-	  else
-	    printf("%s\n", res);
-	}
-      i++;
-    }
   return (0);
 }
 
@@ -100,7 +108,6 @@ int		builtins_echo(t_sh *sh)
     idx++;
   if (idx == 1 && sh->av[2] == NULL)
     return (-1);
-  dollar(sh->av, sh->env);
-  do_the_rest(&sh->av[idx], idx);
+  do_the_rest(&sh->av[idx], idx, sh->env);
   return (0);
 }
