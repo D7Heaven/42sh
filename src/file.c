@@ -5,11 +5,10 @@
 ** Login   <jeanj@epitech.net>
 **
 ** Started on  Fri Jan  8 18:34:45 2016 JEAN Jonathan
-** Last update Sun Jan 24 11:43:17 2016 JEAN Jonathan
+** Last update Tue May 31 15:08:39 2016 Jean Jonathan
 */
 
 #include "sh.h"
-#include "my.h"
 
 int	load_rc(t_sh *sh)
 {
@@ -21,10 +20,10 @@ int	load_rc(t_sh *sh)
   read = NULL;
   if ((home = my_getenv(sh->env, "HOME")) == NULL)
     return (my_printf("Can't locate HOME variable\n"));
-  str = malloc(sizeof(char) * (my_strlen(home) + 9));
-  my_memset(str, 0, my_strlen(home) + 9);
+  str = malloc(sizeof(char) * (my_strlen(home) + 7));
+  my_memset(str, 0, my_strlen(home) + 7);
   my_strcpy(str, home);
-  my_strcat(str, "/.myshrc");
+  my_strcat(str, "/.42rc");
   fd = open(str, O_RDONLY);
   free(str);
   if (fd == -1)
@@ -35,6 +34,28 @@ int	load_rc(t_sh *sh)
 	    treat(sh, read);
       free(read);
     }
+  close(fd);
+  return (0);
+}
+
+int     add_history(t_sh *sh, char *add)
+{
+  int	fd;
+  char	*home;
+  char  *str;
+
+  if ((home = my_getenv(sh->env, "HOME")) == NULL)
+    return (my_printf("Can't locate HOME variable\n"));
+  str = malloc(sizeof(char) * (my_strlen(home) + 12));
+  my_memset(str, 0, my_strlen(home) + 12);
+  my_strcpy(str, home);
+  my_strcat(str, "/.42history");
+  fd = open(str, O_CREAT | O_APPEND | O_RDWR, 0666);
+  free(str);
+  if (fd == -1)
+    return (1);
+  write(fd, add, strlen(add));
+  write(fd, "\n", 1);
   close(fd);
   return (0);
 }
