@@ -5,10 +5,28 @@
 ** Login   <jeanj@epitech.net>
 **
 ** Started on  Mon May 30 16:35:16 2016 Jean Jonathan
-** Last update Tue May 31 16:34:37 2016 Jean Jonathan
+** Last update Tue May 31 16:51:28 2016 Jean Jonathan
 */
 
 #include "sh.h"
+
+int     init_fp(t_sh *sh)
+{
+  if ((sh->builtins_ptr = malloc(sizeof(b_ptr *) * 11)) == NULL)
+    return (-1);
+  sh->builtins_ptr[0] = &builtins_env;
+  sh->builtins_ptr[1] = &builtins_setenv;
+  sh->builtins_ptr[2] = &builtins_unsetenv;
+  sh->builtins_ptr[3] = &builtins_cd;
+  sh->builtins_ptr[4] = &builtins_alias;
+  sh->builtins_ptr[5] = &builtins_setalias;
+  sh->builtins_ptr[6] = &builtins_unsetalias;
+  sh->builtins_ptr[7] = &builtins_reload;
+  sh->builtins_ptr[8] = &builtins_echo;
+  sh->builtins_ptr[9] = &read_history;
+  sh->builtins_ptr[10] = &clear_history;
+  return (0);
+}
 
 int     init_builtins(t_sh *sh)
 {
@@ -25,19 +43,7 @@ int     init_builtins(t_sh *sh)
   sh->builtins[8] = my_strdup("echo");
   sh->builtins[9] = my_strdup("history");
   sh->builtins[10] = my_strdup("clear-history");
-  if ((sh->builtins_ptr = malloc(sizeof(b_ptr *) * 11)) == NULL)
-    return (-1);
-  sh->builtins_ptr[0] = &builtins_env;
-  sh->builtins_ptr[1] = &builtins_setenv;
-  sh->builtins_ptr[2] = &builtins_unsetenv;
-  sh->builtins_ptr[3] = &builtins_cd;
-  sh->builtins_ptr[4] = &builtins_alias;
-  sh->builtins_ptr[5] = &builtins_setalias;
-  sh->builtins_ptr[6] = &builtins_unsetalias;
-  sh->builtins_ptr[7] = &builtins_reload;
-  sh->builtins_ptr[8] = &builtins_echo;
-  sh->builtins_ptr[9] = &read_history;
-  sh->builtins_ptr[10] = &clear_history;
+  init_fp(sh);
   return (0);
 }
 
