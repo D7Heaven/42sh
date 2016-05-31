@@ -5,12 +5,13 @@
 ** Login   <jeanj@epitech.net>
 **
 ** Started on  Tue Apr 12 15:21:34 2016 Jean Jonathan
-** Last update Mon May 30 15:53:18 2016 tonell_m
+** Last update Tue May 31 14:41:50 2016 tonell_m
 */
 
 #ifndef PSU_2015_MINISHELL2_SH_H
 #define PSU_2015_MINISHELL2_SH_H
 
+#include <glob.h>
 #include <wait.h>
 #include <string.h>
 #include <stdlib.h>
@@ -111,5 +112,11 @@ int		builtins_env(t_sh *);
 int		builtins_setalias(t_sh *);
 void		my_setalias(t_list **, char **);
 void		my_setalias2(t_list **, char *, char **);
+int		globbing(t_sh *, char *);
+char            *glob_path(char *);
+DIR             *my_opendir(char *);
+int             is_wildcard(char *);
+char            **get_wildcard_param(t_sh *, char *, int);
+int		match(char *, char *);
 
 #endif /* PSU_2015_MINISHELL2_SH_H */

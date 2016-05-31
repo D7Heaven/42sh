@@ -5,44 +5,79 @@
 ** Login   <tonell-m@epitech.net>
 **
 ** Started on  Mon May 30 15:47:22 2016 tonell_m
-** Last update Mon May 30 17:20:03 2016 tonell_m
+** Last update Tue May 31 14:57:41 2016 tonell_m
 */
 
 #include "sh.h"
 #include "my.h"
 
-char		*glob_path(char *arg)
+void		free_tab(char **tab)
 {
-  char		*path;
   int		i;
 
-  i = my_strlen(arg);
-  while (arg[i] != '/' && i >= 0)
-    i--;
-  if (i == 0)
-    return (my_strdup("."));
-  arg[i] = 0;
-  path = my_strdup(arg);
-  arg[i] = '/';
-  return (path);
+  i = 0;
+  while (tab[i])
+    {
+      free(tab[i]);
+      i++;
+    }
+  free(tab);
 }
 
-int		glob(t_sh *sh, char *path, int _av, int idx)
+int             is_glob(char *str)
 {
-  char		*gpath;
-  DIR		*dirp;
-  int		cur_idx;
+  int           i;
 
-  gpath = glob_path(sh->av[_av]);
-  if ((dirp = opendir(gpath)) == NULL)
+  i = 0;
+  while (str[i])
     {
-      my_printf("%s: No such file or dirrectory\n", gpath);
-      return (-1);
+      if (str[i] == '*' || str[i] == '?' || str[i] == '[' || str[i] == ']')
+	return (1);
+      i++;
     }
-  cur_idx = 0;
-  while (cur_idx < idx)
-    {
+  return (0);
+}
 
-      cur_idx++;
+int		get_gl_offs(char **av, unsigned int *ac)
+{
+  int		ret;
+
+  ret = 1;
+  *ac = 1;
+  while (av[*ac])
+    {
+      if (is_glob(av[*ac]) == 0)
+	ret++;
+      (*ac)++;
     }
+  return (ret);
+}
+
+int		globbing(t_sh *sh, char *path)
+{
+  int		k;
+  unsigned int	ac;
+  int		i;
+  glob_t	globbuf;
+
+  globbuf.gl_offs = get_gl_offs(sh->av, &ac);
+  if (globbuf.gl_offs == ac)
+    return (my_exec(sh, path));
+  i = 1;
+  while (is_glob(sh->av[i]) == 0)
+    i++;
+  if (glob(sh->av[i], GLOB_DOOFFS, NULL, &globbuf) != 0)
+    return (printf("42sh: %s: bad pattern\n", sh->av[i]));
+  while (sh->av[++i])
+    if (is_glob(sh->av[i]))
+      if (glob(sh->av[i], GLOB_DOOFFS | GLOB_APPEND, NULL, &globbuf) != 0)
+	return (printf("42sh: %s: bad pattern\n", sh->av[i]));
+  k = -1;
+  i = -1;
+  while (sh->av[++i])
+    if (is_glob(sh->av[i]) == 0)
+      globbuf.gl_pathv[++k] = my_strdup(sh->av[i]);
+  free_tab(sh->av);
+  sh->av = globbuf.gl_pathv;
+  return (my_exec(sh, path));
 }

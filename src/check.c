@@ -19,7 +19,7 @@ int	check_here(t_sh *sh)
     {
       if (sh->av[0][0] == '/' || sh->av[0][0] == '.')
         {
-          my_exec(sh, sh->av[0]);
+          globbing(sh, sh->av[0]);
           return (1);
         }
       else
@@ -32,7 +32,7 @@ int	check_here(t_sh *sh)
   my_strcat(path, sh->av[0]);
   if ((access(path, X_OK)) == 0)
     {
-      my_exec(sh, path);
+      globbing(sh, path);
       return (1);
     }
   return (0);
@@ -59,7 +59,7 @@ int     check_commands(t_sh *sh, int i, char *path, char **paths)
       if ((access(path, X_OK)) == 0)
 	{
 	  freetab(paths);
-	  return (my_exec(sh, path));
+	  return (globbing(sh, path));
 	}
     }
   my_printf("%s: command not found\n", sh->av[0]);
