@@ -5,12 +5,13 @@
 ** Login   <jeanj@epitech.net>
 **
 ** Started on  Tue Apr 12 15:21:34 2016 Jean Jonathan
-** Last update Tue May 31 15:27:46 2016 
+** Last update Mon May 30 17:11:11 2016 Jean Jonathan
 */
 
 #ifndef PSU_2015_MINISHELL2_SH_H
 #define PSU_2015_MINISHELL2_SH_H
 
+#include <glob.h>
 #include <wait.h>
 #include <string.h>
 #include <stdlib.h>
@@ -37,7 +38,7 @@ typedef struct s_list {
   struct s_list *prev;
 } t_list;
 
-typedef struct s_tree
+typedef struct	s_tree
 {
   char          *str;
   int           fd[2];
@@ -49,7 +50,8 @@ typedef struct s_tree
   struct s_tree *piper_read;
 } t_tree;
 
-typedef struct s_sh {
+typedef struct	s_sh
+{
   t_list        *env;
   char          **av;
   char          **ops;
@@ -62,54 +64,60 @@ typedef struct s_sh {
 } t_sh;
 
 int     init_builtins(t_sh *);
-void    error_tree(t_tree *, t_sh *);
-void    check_redirect(t_tree *);
-void    builtins_exit(t_sh *, int);
-void    free_ops(char **);
-void    treat(t_sh *, char *);
-int     is_base(char);
-int     is_neg(char *);
-void    free_tree(t_tree *);
-char    **fill_ops();
-int     my_ngetnbr(char *);
-int     my_exec(t_sh *, char *);
-int     check_commands(t_sh *, int, char *, char **);
-int     main_check(t_sh *, char *, t_tree *);
-int     check_builtins(t_sh *, char *);
-char    *getcurpath();
-int     freetab(char **);
-void    exec_tree(t_tree *, t_sh *);
-void    print_prompt(t_sh *);
-int     my_cd(t_list **, char *);
-int     my_put_in_list(t_list **, char *, char *);
-int     my_delete_list(t_list *);
-int     my_remove_in_list(t_list *, t_sh *);
-char    *my_getenv(t_list *, char *);
-int     my_setenv(t_list **, char *, char *);
-int     my_unsetenv(t_list **, char *, t_sh *);
-char    *my_getalias(t_list *, char *);
-void    my_setalias(t_list **, char **);
-int     my_unsetalias(t_sh *);
-void    print_list(t_list *);
-t_list  *cpy_env(t_list *, char **);
-int     check_alias(t_sh *, t_list *, int, int);
-char    **envtotab(t_list *);
-int     load_rc(t_sh *);
-char    *epur_str(char *);
-int     check_ops(char *, t_tree *);
-t_tree  *create_tree(t_tree *, char *, char **, int);
-void	finish_tree(t_tree *);
-void	create_pipe(t_tree *);
-int	builtins_setenv(t_sh *);
-int	builtins_unsetenv(t_sh *);
-int	builtins_alias(t_sh *);
-int	builtins_reload(t_sh *);
-int	builtins_unsetalias(t_sh *);
-int	builtins_cd(t_sh *);
-int	builtins_env(t_sh *);
-int	builtins_setalias(t_sh *);
-void	my_setalias(t_list **, char **);
-void	my_setalias2(t_list **, char *, char **);
+void		error_tree(t_tree *, t_sh *);
+void		check_redirect(t_tree *);
+void		builtins_exit(t_sh *, int);
+void		free_ops(char **);
+void		treat(t_sh *, char *);
+int		is_base(char);
+int		is_neg(char *);
+void		free_tree(t_tree *);
+char		**fill_ops();
+int		my_ngetnbr(char *);
+int		my_exec(t_sh *, char *);
+int		check_commands(t_sh *, int, char *, char **);
+int		main_check(t_sh *, char *, t_tree *);
+int		check_builtins(t_sh *, char *);
+char		*getcurpath();
+int		freetab(char **);
+void		exec_tree(t_tree *, t_sh *);
+void		print_prompt(t_sh *);
+int		my_cd(t_list **, char *);
+int		my_put_in_list(t_list **, char *, char *);
+int		my_delete_list(t_list *);
+int		my_remove_in_list(t_list *, t_sh *);
+char		*my_getenv(t_list *, char *);
+int		my_setenv(t_list **, char *, char *);
+int		my_unsetenv(t_list **, char *, t_sh *);
+char		*my_getalias(t_list *, char *);
+void		my_setalias(t_list **, char **);
+int		my_unsetalias(t_sh *);
+void		print_list(t_list *);
+t_list		*cpy_env(t_list *, char **);
+int		check_alias(t_sh *, t_list *, int, int);
+char		**envtotab(t_list *);
+int		load_rc(t_sh *);
+char		*epur_str(char *);
+int		check_ops(char *, t_tree *);
+t_tree		*create_tree(t_tree *, char *, char **, int);
+void		finish_tree(t_tree *);
+void		create_pipe(t_tree *);
+int		builtins_setenv(t_sh *);
+int		builtins_unsetenv(t_sh *);
+int		builtins_alias(t_sh *);
+int		builtins_reload(t_sh *);
+int		builtins_unsetalias(t_sh *);
+int		builtins_cd(t_sh *);
+int		builtins_env(t_sh *);
+int		builtins_setalias(t_sh *);
+void		my_setalias(t_list **, char **);
+void		my_setalias2(t_list **, char *, char **);
 int	builtins_echo(t_sh *);
+int		globbing(t_sh *, char *);
+char            *glob_path(char *);
+DIR             *my_opendir(char *);
+int             is_wildcard(char *);
+char            **get_wildcard_param(t_sh *, char *, int);
+int		match(char *, char *);
 
 #endif /* PSU_2015_MINISHELL2_SH_H */
