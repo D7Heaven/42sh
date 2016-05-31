@@ -5,7 +5,7 @@
 ** Login   <jeanj@epitech.net>
 **
 ** Started on  Tue Apr 12 15:15:13 2016 Jean Jonathan
-** Last update Mon May 30 14:12:18 2016 Remi
+** Last update Tue May 31 09:45:51 2016 Remi
 */
 
 #include "sh.h"
@@ -14,11 +14,11 @@
 int     check_ops2(char *str, t_tree *tree)
 {
   if (my_strcmp(str, ">") == 0)
-    tree->fd[1] = open(tree->right->str, O_RDWR | O_CREAT | O_TRUNC, 0666);
+    create_new_file(tree);
   else if (my_strcmp(str, ">>") == 0)
-    tree->fd[1] = open(tree->right->str, O_RDWR | O_CREAT | O_APPEND, 0666);
+    create_new_file(tree);
   else if (my_strcmp(str, "<") == 0)
-    tree->fd[0] = open(tree->right->str, O_RDWR, 0666);
+    open_new_file(tree);
   else
     return (1);
   if (tree->fd[1] < 0)
