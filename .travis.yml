@@ -4,3 +4,4 @@ script:
     - tests/norme.py src/*
     - tests/norme.py src/*/*
     - tests/moul.sh 
+    - cat /tmp/test.*/*/*
