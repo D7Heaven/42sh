@@ -72,8 +72,7 @@ void    dad(t_sh *sh, pid_t pid)
       return_exec_success(sh);
   sprintf(buff, "%d", WEXITSTATUS(status));
   my_setenv(&sh->env, "?", buff);
-  if (WTERMSIG(status) == SIGSEGV)
-    write(2, "Segmentation Fault\n", 19);
+  handle_message(status);
   freetab(sh->av);
 }
 
