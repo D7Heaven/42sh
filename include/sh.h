@@ -5,7 +5,7 @@
 ** Login   <jeanj@epitech.net>
 **
 ** Started on  Tue Apr 12 15:21:34 2016 Jean Jonathan
-** Last update Mon May 30 17:11:11 2016 Jean Jonathan
+** Last update Tue May 31 15:27:46 2016 
 */
 
 #ifndef PSU_2015_MINISHELL2_SH_H
@@ -120,6 +120,7 @@ void		my_setalias(t_list **, char **);
 void		my_setalias2(t_list **, char *, char **);
 int	builtins_echo(t_sh *);
 int     add_history(t_sh *, char *);
+void	check_env(t_sh *);
 int		globbing(t_sh *, char *);
 char            *glob_path(char *);
 int     clear_history(t_sh *);
