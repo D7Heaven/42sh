@@ -1,7 +1,8 @@
 language: c
+sudo: required
 install: 
     - make
-    - apt-get install tcsh
+    - sudo apt-get install tcsh
 script:
     - tests/norme.py src/*
     - tests/norme.py src/*/*
