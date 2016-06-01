@@ -94,5 +94,5 @@ int	main(int ac, char *av[], char *e[])
       else
         builtins_exit(&sh, 1);
     }
-  return (0);
+  return (1);
 }
