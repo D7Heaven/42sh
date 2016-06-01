@@ -37,7 +37,8 @@ SRC	:= main.c \
            builtins/exit.c \
            builtins/echo.c \
            glob.c \
-	   match.c
+	   match.c \
+           get_next_line.c
 
 SRC	:= $(addprefix $(SRC_DIR)/, $(SRC))
 

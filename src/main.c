@@ -5,7 +5,7 @@
 ** Login   <jeanj@epitech.net>
 **
 ** Started on  Tue Apr 12 14:29:16 2016 Jean Jonathan
-** Last update Wed Jun  1 14:23:26 2016 Jean Jonathan
+** Last update Mon May 30 16:41:43 2016 Jean Jonathan
 */
 
 #include "my.h"
@@ -59,6 +59,7 @@ void    treat(t_sh *sh, char *buff)
   while (t[i] != NULL)
     {
       sh->tree = create_tree(NULL, t[i], sh->ops, my_strlen(t[i]));
+      add_history(sh, t[i]);
       sh->error = 0;
       check_redirect(sh->tree);
       error_tree(sh->tree, sh);
