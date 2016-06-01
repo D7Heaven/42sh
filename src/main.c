@@ -5,7 +5,7 @@
 ** Login   <jeanj@epitech.net>
 **
 ** Started on  Tue Apr 12 14:29:16 2016 Jean Jonathan
-** Last update Mon May 30 16:41:43 2016 Jean Jonathan
+** Last update Wed Jun  1 14:23:26 2016 Jean Jonathan
 */
 
 #include "my.h"
@@ -67,6 +67,7 @@ void    treat(t_sh *sh, char *buff)
       else
         exec_tree(sh->tree, sh);
       free_tree(sh->tree);
+      sh->tree = NULL;
       i++;
     }
   freetab(t);

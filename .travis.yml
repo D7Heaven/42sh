@@ -2,3 +2,5 @@ language: c
 install: make
 script:
     - tests/norme.py src/*
+    - tests/norme.py src/*/*
+    - tests/moul.sh 
