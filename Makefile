@@ -5,7 +5,7 @@
 ## Login   <jeanj@epitech.net>
 ## 
 ## Started on  Tue Apr 12 18:57:02 2016 Jean Jonathan
-## Last update Tue May 31 15:26:13 2016 
+## Last update Wed Jun  1 16:38:09 2016 
 ##
 
 CC=	gcc
@@ -27,6 +27,7 @@ SRC	:= main.c \
            exec.c \
 	   pipe.c \
 	   tree3.c \
+	   default_env.c \
 	   builtins/alias.c \
 	   builtins/alias2.c \
 	   builtins/cd.c \

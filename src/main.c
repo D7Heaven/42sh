@@ -5,7 +5,7 @@
 ** Login   <jeanj@epitech.net>
 **
 ** Started on  Tue Apr 12 14:29:16 2016 Jean Jonathan
-** Last update Mon May 30 16:41:43 2016 Jean Jonathan
+** Last update Wed Jun  1 16:41:54 2016 
 */
 
 #include "my.h"
@@ -36,6 +36,8 @@ int	my_init(t_sh *sh, char **e)
   sh->env = NULL;
   sh->env = cpy_env(sh->env, e);
   sh->ops = fill_ops();
+  if (e[0] == NULL)
+    check_env(sh);
   init_builtins(sh);
   if (signal(SIGINT, &sig_handler) == SIG_ERR)
     my_printf("Can't catch signal.\n");
