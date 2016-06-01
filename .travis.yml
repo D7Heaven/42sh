@@ -1,5 +1,7 @@
 language: c
-install: make
+install: 
+    - make
+    - apt-get install tcsh
 script:
     - tests/norme.py src/*
     - tests/norme.py src/*/*
