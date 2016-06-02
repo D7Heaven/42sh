@@ -1,11 +1,11 @@
 /*
-** echo.c for  in /home/bedel_a/Projet/PSU/42sh
+1;2802;0c** echo.c for  in /home/bedel_a/Projet/PSU/42sh
 **
 ** Made by
 ** Login   <bedel_a@epitech.net>
 **
 ** Started on  Tue May 31 15:26:33 2016
-** Last update Wed Jun  1 20:00:36 2016 
+** Last update Thu Jun  2 15:11:48 2016 
 */
 
 #include "sh.h"
@@ -29,7 +29,7 @@ int		handle_backslash(char *str, int i, int quote)
   n = -1;
   while (tab[++n] != NULL)
     {
-      if (str[i + 1] == tab[n][0])
+      if (str[i + 1] == tab[n][0] && quote == 1)
 	return (write(1, &tab[n][1], 1));
     }
   if (quote == 1)
