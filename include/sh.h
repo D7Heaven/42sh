@@ -5,7 +5,7 @@
 ** Login   <jeanj@epitech.net>
 **
 ** Started on  Tue Apr 12 15:21:34 2016 Jean Jonathan
-** Last update Mon May 30 17:11:11 2016 Jean Jonathan
+** Last update Fri Jun  3 15:31:34 2016 tonell_m
 */
 
 #ifndef PSU_2015_MINISHELL2_SH_H
@@ -25,7 +25,7 @@
 #include "my.h"
 
 #define	BUFF_SIZE       (4096)
-#define MAX_OPS         (5)
+#define MAX_OPS         (6)
 
 struct s_sh;
 

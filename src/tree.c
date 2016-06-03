@@ -5,7 +5,7 @@
 ** Login   <jeanj@epitech.net>
 **
 ** Started on  Tue Apr 12 14:34:45 2016 Jean Jonathan
-** Last update Fri Jun  3 15:20:20 2016 tonell_m
+** Last update Fri Jun  3 15:30:33 2016 tonell_m
 */
 
 #include "my.h"
@@ -24,7 +24,7 @@ int		find_op(t_tree *tree, char *str, int end, char **ops)
       inhib = 0;
       while (--i >= 0)
         {
-	  if (*(str + i) == '\"')
+	  if (*(str + i) == '\"' || *(str + i) == '`')
 	    inhib++;
           if ((my_strncmp(str + i, ops[j], my_strlen(ops[j])) == 0) &&
 	      inhib % 2 == 0)

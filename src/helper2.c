@@ -5,7 +5,7 @@
 ** Login   <jeanj@epitech.net>
 **
 ** Started on  Tue Apr 12 14:33:45 2016 Jean Jonathan
-** Last update Tue Apr 12 15:14:32 2016 Jean Jonathan
+** Last update Fri Jun  3 15:33:32 2016 tonell_m
 */
 
 #include "sh.h"
@@ -22,6 +22,7 @@ char    **fill_ops()
   ops[2] = my_strdup(">");
   ops[3] = my_strdup("|");
   ops[4] = my_strdup("<");
+  ops[5] = my_strdup("`");
   return (ops);
 }
 
