@@ -5,7 +5,7 @@
 ** Login   <tonell-m@epitech.net>
 **
 ** Started on  Mon May 30 15:47:22 2016 tonell_m
-** Last update Fri Jun  3 15:11:29 2016 tonell_m
+** Last update Fri Jun  3 15:50:54 2016 Jean Jonathan
 */
 
 #include <errno.h>
@@ -86,22 +86,22 @@ int		globbing(t_sh *sh, char *path)
   int		k;
   unsigned int	ac;
   int		i;
-  glob_t	globbuf;
+  glob_t	globuf;
 
-  globbuf.gl_offs = get_gl_offs(sh->av, &ac);
-  if (globbuf.gl_offs == ac)
+  globuf.gl_offs = get_gl_offs(sh->av, &ac);
+  if (globuf.gl_offs == ac)
     return (my_exec(sh, path));
   i = 1;
   while (is_glob(sh->av[i]) == 0)
     i++;
-  if (gl_path(sh, i, &globbuf) > 0)
+  if (gl_path(sh, i, &globuf) > 0)
     return (1);
   k = -1;
   i = -1;
   while (sh->av[++i])
     if (is_glob(sh->av[i]) == 0)
-      globbuf.gl_pathv[++k] = my_strdup(sh->av[i]);
+      globuf.gl_pathv[++k] = my_strdup(sh->av[i]);
   free_tab(sh->av);
-  sh->av = globbuf.gl_pathv;
+  sh->av = globuf.gl_pathv;
   return (my_exec(sh, path));
 }
