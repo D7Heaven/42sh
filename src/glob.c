@@ -5,9 +5,10 @@
 ** Login   <tonell-m@epitech.net>
 **
 ** Started on  Mon May 30 15:47:22 2016 tonell_m
-** Last update Tue May 31 14:57:41 2016 tonell_m
+** Last update Fri Jun  3 15:11:29 2016 tonell_m
 */
 
+#include <errno.h>
 #include "sh.h"
 #include "my.h"
 
@@ -53,6 +54,33 @@ int		get_gl_offs(char **av, unsigned int *ac)
   return (ret);
 }
 
+int		gl_path(t_sh *sh, int i, glob_t *globbuf)
+{
+  int		rg;
+
+  if ((rg = glob(sh->av[i], GLOB_DOOFFS, NULL, globbuf)) != 0)
+    {
+      my_setenv(&sh->env, "?", "1");
+      if (rg == GLOB_NOMATCH)
+	printf("%s: No match.\n", sh->av[0]);
+      else
+	return (2);
+      return (1);
+    }
+  while (sh->av[++i])
+    if (is_glob(sh->av[i]))
+      if ((rg = glob(sh->av[i], GLOB_DOOFFS | GLOB_APPEND, NULL, globbuf)) != 0)
+	{
+	  my_setenv(&sh->env, "?", "1");
+	  if (rg == GLOB_NOMATCH)
+	    printf("%s: No match.\n", sh->av[0]);
+	  else
+	    return (2);
+	  return (1);
+	}
+  return (0);
+}
+
 int		globbing(t_sh *sh, char *path)
 {
   int		k;
@@ -66,12 +94,8 @@ int		globbing(t_sh *sh, char *path)
   i = 1;
   while (is_glob(sh->av[i]) == 0)
     i++;
-  if (glob(sh->av[i], GLOB_DOOFFS, NULL, &globbuf) != 0)
-    return (printf("42sh: %s: bad pattern\n", sh->av[i]));
-  while (sh->av[++i])
-    if (is_glob(sh->av[i]))
-      if (glob(sh->av[i], GLOB_DOOFFS | GLOB_APPEND, NULL, &globbuf) != 0)
-	return (printf("42sh: %s: bad pattern\n", sh->av[i]));
+  if (gl_path(sh, i, &globbuf) > 0)
+    return (1);
   k = -1;
   i = -1;
   while (sh->av[++i])

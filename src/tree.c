@@ -17,12 +17,12 @@ int		find_op(t_tree *tree, char *str, int end, char **ops)
   int		j;
   char		inhib;
 
-  j = 0;
-  while (j < MAX_OPS)
+  j = -1;
+  while (++j < MAX_OPS)
     {
-      i = end - 1;
+      i = end;
       inhib = 0;
-      while (i >= 0)
+      while (--i >= 0)
         {
 	  if (*(str + i) == '\"')
 	    inhib++;
@@ -35,9 +35,7 @@ int		find_op(t_tree *tree, char *str, int end, char **ops)
               tree->str = my_strdup(ops[j]);
               return (i + my_strlen(ops[j]));
             }
-          i--;
         }
-      j++;
     }
   return (-1);
 }
