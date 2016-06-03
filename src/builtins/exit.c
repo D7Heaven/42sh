@@ -5,7 +5,7 @@
 ** Login   <jeanj@epitech.net>
 **
 ** Started on  Sun Jan 31 21:18:18 2016 Jean Jonathan
-** Last update Fri Jun  3 11:56:12 2016 Jean Jonathan
+** Last update Fri Jun  3 15:05:08 2016 Jean Jonathan
 */
 
 #include "sh.h"
@@ -32,6 +32,5 @@ void    builtins_exit(t_sh *sh, int i)
   free_ops(sh->ops);
   if (sh->tree != NULL)
     free_tree(sh->tree);
-  my_putstr("\n");
   exit(code);
 }
