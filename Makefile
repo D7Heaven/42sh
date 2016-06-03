@@ -5,7 +5,7 @@
 ## Login   <jeanj@epitech.net>
 ## 
 ## Started on  Tue Apr 12 18:57:02 2016 Jean Jonathan
-## Last update Mon May 30 17:11:39 2016 Jean Jonathan
+## Last update Fri Jun  3 14:53:41 2016 Jean Jonathan
 ##
 
 CC=	gcc
@@ -27,16 +27,21 @@ SRC	:= main.c \
            exec.c \
 	   pipe.c \
 	   tree3.c \
-	   builtins/alias.c \
-	   builtins/alias2.c \
-	   builtins/cd.c \
-	   builtins/conf.c \
-	   builtins/env2.c \
-	   builtins/env.c \
-	   builtins/exit.c \
-	   builtins/echo.c \
-	   glob.c \
-	   match.c
+	   et_ou.c \
+	   default_env.c \
+           builtins/alias.c \
+           builtins/alias2.c \
+           builtins/cd.c \
+           builtins/conf.c \
+           builtins/env2.c \
+           builtins/env.c \
+           builtins/exit.c \
+           builtins/echo.c \
+           glob.c \
+	   builtins/echo2.c \
+	   match.c \
+	   message.c \
+           get_next_line.c
 
 SRC	:= $(addprefix $(SRC_DIR)/, $(SRC))
 

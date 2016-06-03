@@ -5,7 +5,7 @@
 ** Login   <jeanj@epitech.net>
 **
 ** Started on  Tue Apr 12 15:21:34 2016 Jean Jonathan
-** Last update Mon May 30 17:11:11 2016 Jean Jonathan
+** Last update Fri Jun  3 15:17:24 2016 Jean Jonathan
 */
 
 #ifndef PSU_2015_MINISHELL2_SH_H
@@ -25,7 +25,7 @@
 #include "my.h"
 
 #define	BUFF_SIZE       (4096)
-#define MAX_OPS         (5)
+#define MAX_OPS         (7)
 
 struct s_sh;
 
@@ -43,6 +43,7 @@ typedef struct	s_tree
   char          *str;
   int           fd[2];
   int           pipe[2];
+  char		success;
   struct s_tree *parent;
   struct s_tree *left;
   struct s_tree *right;
@@ -63,7 +64,9 @@ typedef struct	s_sh
   t_list	*alias;
 } t_sh;
 
-int     init_builtins(t_sh *);
+int             is_in_env(t_list *, char *);
+void            handle_message(int);
+int             init_builtins(t_sh *);
 void		error_tree(t_tree *, t_sh *);
 void		check_redirect(t_tree *);
 void		builtins_exit(t_sh *, int);
@@ -107,14 +110,24 @@ int		builtins_unsetenv(t_sh *);
 int		builtins_alias(t_sh *);
 int		builtins_reload(t_sh *);
 int		builtins_unsetalias(t_sh *);
+void	create_new_file(t_tree *);
+void	open_new_file(t_tree *);
+void	open_new_file2(t_tree *, t_tree*);
+int	return_exec_success(t_sh *);
+void	init_tree(t_tree *);
 int		builtins_cd(t_sh *);
 int		builtins_env(t_sh *);
 int		builtins_setalias(t_sh *);
 void		my_setalias(t_list **, char **);
 void		my_setalias2(t_list **, char *, char **);
 int	builtins_echo(t_sh *);
+int     add_history(t_sh *, char *);
+int	check_parentheses(char *);
+void	check_env(t_sh *);
 int		globbing(t_sh *, char *);
 char            *glob_path(char *);
+int     clear_history(t_sh *);
+int     read_history(t_sh *);
 DIR             *my_opendir(char *);
 int             is_wildcard(char *);
 char            **get_wildcard_param(t_sh *, char *, int);

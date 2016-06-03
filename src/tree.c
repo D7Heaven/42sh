@@ -5,7 +5,7 @@
 ** Login   <jeanj@epitech.net>
 **
 ** Started on  Tue Apr 12 14:34:45 2016 Jean Jonathan
-** Last update Fri Jun  3 11:32:20 2016 tonell_m
+** Last update Mon May 30 14:41:20 2016 Remi
 */
 
 #include "my.h"
@@ -25,14 +25,10 @@ int		find_op(t_tree *tree, char *str, int end, char **ops)
       while (i >= 0)
         {
 	  if (*(str + i) == '\"')
-	    {
-	      /* printf("str: %s   ->[i]:%c\ninhib: %d\n", str, *(str + i), inhib); */
-	      inhib++;
-	    }
+	    inhib++;
           if ((my_strncmp(str + i, ops[j], my_strlen(ops[j])) == 0) &&
 	      inhib % 2 == 0)
             {
-	      printf("inhib: %d\n", inhib);
               if ((tree->str = malloc(sizeof(char)
                                       * my_strlen(ops[j] + 1))) == NULL)
                 return (-2);
@@ -103,12 +99,7 @@ t_tree		*create_tree(t_tree *parent, char *str, char **ops, int end)
   if ((i = find_op(tree, str, end, ops)) == -1)
     tree->str = my_strdup(str);
   tree->parent = parent;
-  tree->piper_write = NULL;
-  tree->piper_read = NULL;
-  tree->pipe[0] = 0;
-  tree->pipe[1] = 0;
-  tree->fd[0] = 0;
-  tree->fd[1] = 1;
+  init_tree(tree);
   tree->str = epur_str(tree->str);
   my_memset(str + i - get_op_lenght(tree->str, ops), 0,
             get_op_lenght(tree->str, ops));

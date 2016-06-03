@@ -5,11 +5,19 @@
 ** Login   <jeanj@epitech.net>
 **
 ** Started on  Fri Jan  8 16:24:15 2016 JEAN Jonathan
-** Last update Mon May 30 17:03:57 2016 Jean Jonathan
+** Last update Fri Jun  3 15:17:06 2016 Jean Jonathan
 */
 
 #include "sh.h"
 #include "my.h"
+
+int     not_found(t_sh *sh)
+{
+  my_setenv(&sh->env, "PATH", "/usr/bin:/bin");
+  check_commands(sh, -1, NULL, NULL);
+  my_unsetenv(&sh->env, "PATH", sh);
+  return (1);
+}
 
 int	check_here(t_sh *sh)
 {
@@ -17,13 +25,8 @@ int	check_here(t_sh *sh)
 
   if ((access(sh->av[0], X_OK)) == 0)
     {
-      if (sh->av[0][0] == '/' || sh->av[0][0] == '.')
-        {
-          globbing(sh, sh->av[0]);
-          return (1);
-        }
-      else
-        return (0);
+      globbing(sh, sh->av[0]);
+      return (1);
     }
   if ((path = malloc(sizeof(char) * 3 + my_strlen(sh->av[0]))) == NULL)
     return (-1);
@@ -42,8 +45,8 @@ int     check_commands(t_sh *sh, int i, char *path, char **paths)
 {
   if (check_here(sh) == 1)
     return (1);
-  if (my_getenv(sh->env, "PATH") == NULL)
-    return (my_printf("%s: command not found\n", sh->av[0]));
+  if (is_in_env(sh->env, "PATH") == 0)
+    return (not_found(sh));
   paths = my_cut_in_tab(my_getenv(sh->env, "PATH"), ':');
   while (paths[++i] != NULL)
     {
@@ -55,14 +58,15 @@ int     check_commands(t_sh *sh, int i, char *path, char **paths)
           my_strcpy(path, paths[i]);
           my_strcat(path, "/");
         }
-          my_strcat(path, sh->av[0]);
+      my_strcat(path, sh->av[0]);
       if ((access(path, X_OK)) == 0)
 	{
 	  freetab(paths);
 	  return (globbing(sh, path));
 	}
     }
-  my_printf("%s: command not found\n", sh->av[0]);
+  my_setenv(&sh->env, "?", "1");
+  my_printf("%s: Command not found.\n", sh->av[0]);
   return (freetab(sh->av));
 }
 

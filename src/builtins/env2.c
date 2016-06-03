@@ -5,10 +5,26 @@
 ** Login   <bedel_a@epitech.net>
 **
 ** Started on  Mon May 30 17:33:49 2016
-** Last update Mon May 30 17:40:21 2016 
+** Last update Fri Jun  3 15:18:03 2016 Jean Jonathan
 */
 
 #include "sh.h"
+
+int             is_in_env(t_list *env, char *str)
+{
+  t_list        *tmp;
+
+  tmp = env;
+  while (tmp != NULL)
+    {
+      if (my_strcmp(tmp->key, str) == 0)
+	{
+	  return (1);
+	}
+      tmp = tmp->next;
+    }
+  return (0);
+}
 
 char            *my_getenv(t_list *env, char *str)
 {

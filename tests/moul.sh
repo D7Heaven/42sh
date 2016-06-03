@@ -21,7 +21,7 @@ STDERR_DEBUG=1
 disp_test()
 {
   id=$1
-  $CAT tests | $GREP -A1000 "\[$id\]" | $GREP -B1000 "^\[$id-END\]" | $GREP -v "^\[.*\]"
+  $CAT tests/tests | $GREP -A1000 "\[$id\]" | $GREP -B1000 "^\[$id-END\]" | $GREP -v "^\[.*\]"
 }
 
 prepare_test()

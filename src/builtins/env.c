@@ -5,7 +5,7 @@
 ** Login   <bedel_a@epitech.net>
 **
 ** Started on  Mon May 30 17:36:38 2016
-** Last update Mon May 30 17:49:12 2016 
+** Last update Fri Jun  3 13:48:36 2016 Jean Jonathan
 */
 
 #include "sh.h"
@@ -27,8 +27,17 @@ int     builtins_setenv(t_sh *sh)
 
 int	builtins_unsetenv(t_sh *sh)
 {
+  int   i;
+
+  i = 1;
   if (sh->av[1] != NULL)
-    my_unsetenv(&sh->env, sh->av[1], sh);
+    {
+      while (sh->av[i] != NULL)
+        {
+          my_unsetenv(&sh->env, sh->av[i], sh);
+          i++;
+        }
+    }
   else
     my_printf("unsetenv [key]\n");
   return (0);

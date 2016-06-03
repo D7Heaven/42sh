@@ -1,38 +1,45 @@
 /*
-** echo.c for  in /home/bedel_a/Projet/PSU/42sh
+** echo.c for  in /home/jeanj/Rendu/PSU_2015/42sh
 **
-** Made by
-** Login   <bedel_a@epitech.net>
+** Made by Jean Jonathan
+** Login   <jeanj@epitech.net>
 **
-** Started on  Tue May 31 15:26:33 2016
-** Last update Tue May 31 17:53:12 2016 
+** Started on  Fri Jun  3 12:17:26 2016 Jean Jonathan
+** Last update Fri Jun  3 12:17:27 2016 Jean Jonathan
 */
 
 #include "sh.h"
 
-int		check_parentheses(char *str)
+int		handle_backslash(char *str, int i, int quote)
 {
-  int		simple_quote;
-  int		double_quote;
-  int		i;
+  char		**tab;
+  int		n;
 
-  i = 0;
-  simple_quote = 0;
-  double_quote = 0;
-  while (str[i] != '\0')
+  tab = malloc(sizeof(char *) * 11);
+  tab[0] = "\\\\";
+  tab[1] = "a\a";
+  tab[2] = "b\b";
+  tab[3] = "e\e";
+  tab[4] = "f\f";
+  tab[5] = "n\n";
+  tab[6] = "r\r";
+  tab[7] = "t\t";
+  tab[8] = "v\v";
+  tab[9] = NULL;
+  n = -1;
+  while (tab[++n] != NULL)
     {
-      if (str[i] == '\'')
-	simple_quote++;
-      if (str[i] == '\"')
-	double_quote++;
-      i++;
+      if (str[i + 1] == tab[n][0] && quote == 1)
+	return (write(1, &tab[n][1], 1));
     }
-  if (simple_quote % 2 == 1 || double_quote % 2 == 1)
-    return (-1);
+  if (quote == 1)
+    write(1, "\\", 1);
+  if (str[i] != '\"')
+    write(1, &str[i + 1], 1);
   return (0);
 }
 
-int		print_arg(char *str, int idx)
+int		print_arg(char *str, int idx, int quote)
 {
   int		i;
 
@@ -42,7 +49,15 @@ int		print_arg(char *str, int idx)
   while (str[i] != '\0')
     {
       if (str[i] != '\'' && str[i] != '\"')
-	write(1, &str[i], 1);
+	{
+	  if (str[i] == '\\')
+	    {
+	      handle_backslash(str, i, quote);
+	      i++;
+	    }
+	  else if (str[i] != '\\')
+	    write(1, &str[i], 1);
+	}
       i++;
     }
   if (idx == 0)
@@ -78,20 +93,23 @@ int		do_the_rest(char **av, int idx_n, t_list *env)
 {
   int		i;
   int		idx;
+  int		quote;
 
   i = 1;
   while (av[i + 1] != NULL)
     {
       idx = dollar(av[i], env, 0, idx_n);
-      if (check_parentheses(av[i]) == 0 && idx == -1)
-	print_arg(av[i], 0);
+      quote = check_parentheses(av[i]);
+      if (quote != -1 && idx == -1)
+	print_arg(av[i], 0, quote);
       else if (idx == -1)
 	printf("Undefined quote ");
       i++;
     }
   idx = dollar(av[i], env, 1, idx_n);
-  if (check_parentheses(av[i]) == 0 && idx == -1)
-    print_arg(av[i], 1 + idx_n);
+  quote = check_parentheses(av[i]);
+  if (check_parentheses(av[i]) != -1 && idx == -1)
+    print_arg(av[i], 1 + idx_n, quote);
   else if (idx == -1)
     printf("Undefined quote\n");
   return (0);

@@ -5,7 +5,7 @@
 ** Login   <jeanj@epitech.net>
 **
 ** Started on  Tue Apr 12 14:29:16 2016 Jean Jonathan
-** Last update Mon May 30 16:41:43 2016 Jean Jonathan
+** Last update Fri Jun  3 12:20:41 2016 Jean Jonathan
 */
 
 #include "my.h"
@@ -36,6 +36,8 @@ int	my_init(t_sh *sh, char **e)
   sh->env = NULL;
   sh->env = cpy_env(sh->env, e);
   sh->ops = fill_ops();
+  if (e[0] == NULL)
+    check_env(sh);
   init_builtins(sh);
   if (signal(SIGINT, &sig_handler) == SIG_ERR)
     my_printf("Can't catch signal.\n");
@@ -59,6 +61,7 @@ void    treat(t_sh *sh, char *buff)
   while (t[i] != NULL)
     {
       sh->tree = create_tree(NULL, t[i], sh->ops, my_strlen(t[i]));
+      add_history(sh, t[i]);
       sh->error = 0;
       check_redirect(sh->tree);
       error_tree(sh->tree, sh);
@@ -67,6 +70,7 @@ void    treat(t_sh *sh, char *buff)
       else
         exec_tree(sh->tree, sh);
       free_tree(sh->tree);
+      sh->tree = NULL;
       i++;
     }
   freetab(t);
@@ -90,5 +94,5 @@ int	main(int ac, char *av[], char *e[])
       else
         builtins_exit(&sh, 1);
     }
-  return (0);
+  return (1);
 }

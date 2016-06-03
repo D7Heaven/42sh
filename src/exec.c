@@ -5,20 +5,20 @@
 ** Login   <jeanj@epitech.net>
 **
 ** Started on  Tue Apr 12 15:15:13 2016 Jean Jonathan
-** Last update Mon May 30 14:12:18 2016 Remi
+** Last update Fri Jun  3 14:04:03 2016 Jean Jonathan
 */
 
+#include <errno.h>
 #include "sh.h"
-#include "my.h"
 
 int     check_ops2(char *str, t_tree *tree)
 {
   if (my_strcmp(str, ">") == 0)
-    tree->fd[1] = open(tree->right->str, O_RDWR | O_CREAT | O_TRUNC, 0666);
+    create_new_file(tree);
   else if (my_strcmp(str, ">>") == 0)
-    tree->fd[1] = open(tree->right->str, O_RDWR | O_CREAT | O_APPEND, 0666);
+    create_new_file(tree);
   else if (my_strcmp(str, "<") == 0)
-    tree->fd[0] = open(tree->right->str, O_RDWR, 0666);
+    open_new_file(tree);
   else
     return (1);
   if (tree->fd[1] < 0)
@@ -43,6 +43,10 @@ int     check_ops(char *str, t_tree *tree)
     }
   if (my_strcmp(str, ";") == 0)
     return (0);
+  else if (my_strcmp(str, "&&") == 0)
+    return (0);
+  else if (my_strcmp(str, "||") == 0)
+    return (0);
   else if (my_strcmp(str, "|") == 0)
     {
       create_pipe(tree);
@@ -55,19 +59,24 @@ int     check_ops(char *str, t_tree *tree)
 void    dad(t_sh *sh, pid_t pid)
 {
   int   status;
+  char	buff[5];
 
+  my_memset(buff, 0, 5);
   if (sh->actual->piper_read!= NULL && sh->actual->fd[0] != 0)
     {
       close(sh->actual->piper_read->pipe[0]);
       close(sh->actual->piper_read->pipe[1]);
     }
   waitpid(pid, &status, 0);
-  if (WTERMSIG(status) == SIGSEGV)
-    write(2, "Segmentation Fault\n", 19);
+  if (WIFEXITED(status))
+      return_exec_success(sh);
+  sprintf(buff, "%d", WEXITSTATUS(status));
+  my_setenv(&sh->env, "?", buff);
+  handle_message(status);
   freetab(sh->av);
 }
 
-int    son(t_sh *sh, char *path, char **e)
+int    son(t_sh *sh, char *path)
 {
   if (sh->actual->fd[1] != 1)
     {
@@ -85,11 +94,14 @@ int    son(t_sh *sh, char *path, char **e)
       dup2(sh->actual->fd[0], 0);
       close(sh->actual->fd[0]);
     }
-  e = envtotab(sh->env);
-  if ((execve(path, sh->av, e)) == 0)
+  if ((execve(path, sh->av, envtotab(sh->env))) == 0)
     my_delete_list(sh->env);
   else
-    return (my_printf("%s: Can't execute\n", sh->av[0]));
+    {
+      my_setenv(&sh->env, "?", "1");
+      printf("%s: %s.\n", sh->av[0], strerror(errno));
+      builtins_exit(sh, 1);
+    }
   return (0);
 }
 
@@ -102,7 +114,7 @@ int             my_exec(t_sh *sh, char *path)
     return (0);
   pid = fork();
   if (pid == 0)
-    son(sh, path, NULL);
+    son(sh, path);
   else if (pid > 0)
     dad(sh, pid);
   else
