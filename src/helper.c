@@ -5,7 +5,7 @@
 ** Login   <jeanj@epitech.net>
 **
 ** Started on  Wed Jan  6 17:09:03 2016 JEAN Jonathan
-** Last update Tue Apr 12 15:27:01 2016 Jean Jonathan
+** Last update Fri Jun  3 16:22:09 2016 tonell_m
 */
 
 #include "sh.h"
@@ -22,24 +22,23 @@ char		*getcurpath()
   return (dir->d_name);
 }
 
-char	**envtotab(t_list *env)
+char		**envtotab(t_list *env)
 {
-  char	**tab;
-  t_list *tmp;
-  int	i;
+  char		**tab;
+  t_list	*tmp;
+  int		i;
 
-  i = 0;
   tmp = env;
-  while (tmp != NULL)
-    {
-      i++;
-      tmp = tmp->next;
-    }
+  i = 0;
+  while (tmp != NULL && ++i)
+    tmp = tmp->next;
   tmp = env;
   tab = malloc(sizeof(char *) * (i + 1));
   tab[i] = NULL;
   while (--i >= 0)
     {
+      if (tmp->val == NULL)
+	tmp->val = my_strdup("");
       tab[i] = malloc(sizeof(char) * (my_strlen(tmp->val)
 				      + my_strlen(tmp->key) + 2));
       my_memset(tab[i], 0, my_strlen(tmp->val) + my_strlen(tmp->key) + 2);
