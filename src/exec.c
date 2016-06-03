@@ -5,11 +5,11 @@
 ** Login   <jeanj@epitech.net>
 **
 ** Started on  Tue Apr 12 15:15:13 2016 Jean Jonathan
-** Last update Fri Jun  3 11:57:27 2016 Jean Jonathan
+** Last update Fri Jun  3 13:33:14 2016 Jean Jonathan
 */
 
+#include <errno.h>
 #include "sh.h"
-#include "my.h"
 
 int     check_ops2(char *str, t_tree *tree)
 {
@@ -101,7 +101,8 @@ int    son(t_sh *sh, char *path, char **e)
   else
     {
       my_setenv(&sh->env, "?", "1");
-      return (my_printf("%s: Can't execute\n", sh->av[0]));
+      printf("%s: %s\n", sh->av[0], strerror(errno));
+      builtins_exit(sh, 1);
     }
   return (0);
 }
