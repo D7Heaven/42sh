@@ -5,7 +5,6 @@
 ** Login   <arnoulr@epitech.net>
 **
 ** Started on  Wed Jun  1 14:23:10 2016 Remi
-** Last update Fri Jun  3 15:08:43 2016 Jean Jonathan
 */
 
 #include "sh.h"
