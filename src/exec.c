@@ -5,7 +5,7 @@
 ** Login   <jeanj@epitech.net>
 **
 ** Started on  Tue Apr 12 15:15:13 2016 Jean Jonathan
-** Last update Fri Jun  3 13:33:14 2016 Jean Jonathan
+** Last update Fri Jun  3 13:57:59 2016 Jean Jonathan
 */
 
 #include <errno.h>
@@ -101,7 +101,7 @@ int    son(t_sh *sh, char *path, char **e)
   else
     {
       my_setenv(&sh->env, "?", "1");
-      printf("%s: %s\n", sh->av[0], strerror(errno));
+      printf("%s: %s.\n", sh->av[0], strerror(errno));
       builtins_exit(sh, 1);
     }
   return (0);

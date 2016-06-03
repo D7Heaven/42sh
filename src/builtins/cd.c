@@ -5,15 +5,14 @@
 ** Login   <bedel_a@epitech.net>
 **
 ** Started on  Mon May 30 17:38:09 2016
-** Last update Mon May 30 17:53:06 2016 
+** Last update Fri Jun  3 13:57:51 2016 Jean Jonathan
 */
 
+#include <errno.h>
 #include "sh.h"
-#include "my.h"
 
 int             my_cd2(t_list **env, char *path)
 {
-  struct stat   sb;
   char          *old;
 
   old = getcwd(0, 0);
@@ -24,10 +23,8 @@ int             my_cd2(t_list **env, char *path)
     }
   else
     {
-      if (stat(path, &sb) == -1)
-	my_printf("%s: No such file or directory\n", path);
-      else
-	my_printf("%s: Not a directory\n", path);
+      my_setenv(env, "?", "1");
+      my_printf("%s: %s.\n", path, strerror(errno));
     }
   return (0);
 }
