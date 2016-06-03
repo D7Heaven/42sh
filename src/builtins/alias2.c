@@ -5,7 +5,7 @@
 ** Login   <bedel_a@epitech.net>
 **
 ** Started on  Mon May 30 17:43:05 2016
-** Last update Mon May 30 17:43:26 2016 
+** Last update Fri Jun  3 17:15:05 2016 tonell_m
 */
 
 #include "sh.h"
@@ -41,7 +41,7 @@ int             my_unsetalias(t_sh *sh)
     {
       if (my_strcmp(tmp->key, sh->av[1]) == 0)
 	{
-	  my_remove_in_list(tmp, sh);
+	  my_remove_in_list(&tmp, sh);
 	  return (0);
 	}
       tmp = tmp->next;

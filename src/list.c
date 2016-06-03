@@ -5,7 +5,7 @@
 ** Login   <jeanj@epitech.net>
 **
 ** Started on  Wed Dec  2 17:59:16 2015 JEAN Jonathan
-** Last update Tue Apr 12 15:27:20 2016 Jean Jonathan
+** Last update Fri Jun  3 17:16:34 2016 tonell_m
 */
 
 #include "sh.h"
@@ -43,27 +43,38 @@ void		print_list(t_list *env)
     }
 }
 
-int	my_remove_in_list(t_list *list, t_sh *sh)
+int	free_elem(t_list *elem)
 {
-  if (list->prev == NULL && list->next == NULL)
+  if (elem)
     {
-      free(list->val);
-      free(list->key);
-      free(list);
+      if (elem->val)
+	free(elem->val);
+      if (elem->key)
+	free(elem->key);
+      free(elem);
+    }
+  return (0);
+}
+
+int	my_remove_in_list(t_list **list, t_sh *sh)
+{
+  if ((*list)->prev == NULL && (*list)->next == NULL)
+    {
       sh->alias = NULL;
       return (0);
     }
-  if (list->prev == NULL)
-    list->next->prev = NULL;
+  if ((*list)->prev == NULL)
+    {
+      *list = (*list)->next;
+      (*list)->prev = NULL;
+      return (0);
+    }
   else
-    list->prev->next = list->next;
-  if (list->next == NULL)
-    list->prev->next = NULL;
+    (*list)->prev->next = (*list)->next;
+  if ((*list)->next == NULL)
+    (*list)->prev->next = NULL;
   else
-    list->next->prev = list->prev;
-  free(list->val);
-  free(list->key);
-  free(list);
+    (*list)->next->prev = (*list)->prev;
   return (0);
 }
 
@@ -73,24 +84,14 @@ int    my_delete_list(t_list *list)
     return (0);
   if (list->next == NULL)
     {
-      free(list->val);
-      free(list->key);
-      free(list);
+      free_elem(list);
       return (1);
     }
   list = list->next;
   while (list->next != NULL && list != NULL)
     {
-      free(list->prev->key);
-      free(list->prev->val);
-      free(list->prev);
       list = list->next;
+      free_elem(list->prev);
     }
-  if (list != NULL)
-  {
-    free(list->key);
-    free(list->val);
-    free(list);
-  }
   return (1);
 }

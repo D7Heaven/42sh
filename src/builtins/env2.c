@@ -5,7 +5,7 @@
 ** Login   <bedel_a@epitech.net>
 **
 ** Started on  Mon May 30 17:33:49 2016
-** Last update Fri Jun  3 15:18:03 2016 Jean Jonathan
+** Last update Fri Jun  3 17:15:35 2016 tonell_m
 */
 
 #include "sh.h"
@@ -79,7 +79,7 @@ int             my_unsetenv(t_list **env, char *key, t_sh *sh)
     {
       if (my_strcmp(tmp->key, key) == 0)
 	{
-	  my_remove_in_list(tmp, sh);
+	  my_remove_in_list(&tmp, sh);
 	  return (0);
 	}
       tmp = tmp->next;

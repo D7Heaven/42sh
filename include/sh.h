@@ -5,7 +5,7 @@
 ** Login   <jeanj@epitech.net>
 **
 ** Started on  Tue Apr 12 15:21:34 2016 Jean Jonathan
-** Last update Fri Jun  3 15:17:24 2016 Jean Jonathan
+** Last update Fri Jun  3 17:13:44 2016 tonell_m
 */
 
 #ifndef PSU_2015_MINISHELL2_SH_H
@@ -88,7 +88,7 @@ void		print_prompt(t_sh *);
 int		my_cd(t_list **, char *);
 int		my_put_in_list(t_list **, char *, char *);
 int		my_delete_list(t_list *);
-int		my_remove_in_list(t_list *, t_sh *);
+int		my_remove_in_list(t_list **, t_sh *);
 char		*my_getenv(t_list *, char *);
 int		my_setenv(t_list **, char *, char *);
 int		my_unsetenv(t_list **, char *, t_sh *);

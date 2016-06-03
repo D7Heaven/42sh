@@ -5,7 +5,7 @@
 ** Login   <tonell-m@epitech.net>
 **
 ** Started on  Mon May 30 15:47:22 2016 tonell_m
-** Last update Fri Jun  3 15:50:54 2016 Jean Jonathan
+** Last update Fri Jun  3 17:18:38 2016 tonell_m
 */
 
 #include <errno.h>
@@ -54,11 +54,11 @@ int		get_gl_offs(char **av, unsigned int *ac)
   return (ret);
 }
 
-int		gl_path(t_sh *sh, int i, glob_t *globbuf)
+int		gl_path(t_sh *sh, int i, glob_t *globuf)
 {
   int		rg;
 
-  if ((rg = glob(sh->av[i], GLOB_DOOFFS, NULL, globbuf)) != 0)
+  if ((rg = glob(sh->av[i], GLOB_DOOFFS, NULL, globuf)) != 0)
     {
       my_setenv(&sh->env, "?", "1");
       if (rg == GLOB_NOMATCH)
@@ -69,7 +69,7 @@ int		gl_path(t_sh *sh, int i, glob_t *globbuf)
     }
   while (sh->av[++i])
     if (is_glob(sh->av[i]))
-      if ((rg = glob(sh->av[i], GLOB_DOOFFS | GLOB_APPEND, NULL, globbuf)) != 0)
+      if ((rg = glob(sh->av[i], GLOB_DOOFFS | GLOB_APPEND, NULL, globuf)) != 0)
 	{
 	  my_setenv(&sh->env, "?", "1");
 	  if (rg == GLOB_NOMATCH)
