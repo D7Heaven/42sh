@@ -5,7 +5,7 @@
 ## Login   <jeanj@epitech.net>
 ## 
 ## Started on  Tue Apr 12 18:57:02 2016 Jean Jonathan
-## Last update Tue May 31 16:56:44 2016 Jean Jonathan
+## Last update Fri Jun  3 14:53:41 2016 Jean Jonathan
 ##
 
 CC=	gcc
@@ -40,9 +40,7 @@ SRC	:= main.c \
            glob.c \
 	   builtins/echo2.c \
 	   match.c \
-	   match.c \
-	   message.c
-	   match.c
+	   message.c \
            get_next_line.c
 
 SRC	:= $(addprefix $(SRC_DIR)/, $(SRC))

@@ -5,7 +5,7 @@
 ** Login   <jeanj@epitech.net>
 **
 ** Started on  Tue Apr 12 15:21:34 2016 Jean Jonathan
-** Last update Wed Jun  1 20:01:33 2016 
+** Last update Fri Jun  3 14:53:13 2016 Jean Jonathan
 */
 
 #ifndef PSU_2015_MINISHELL2_SH_H
@@ -64,7 +64,8 @@ typedef struct	s_sh
   t_list	*alias;
 } t_sh;
 
-int     init_builtins(t_sh *);
+void            handle_message(int);
+int             init_builtins(t_sh *);
 void		error_tree(t_tree *, t_sh *);
 void		check_redirect(t_tree *);
 void		builtins_exit(t_sh *, int);
