@@ -5,7 +5,7 @@
 ** Login   <jeanj@epitech.net>
 **
 ** Started on  Fri Jun  3 15:42:17 2016 Jean Jonathan
-** Last update Fri Jun  3 15:42:18 2016 Jean Jonathan
+** Last update Fri Jun  3 18:17:17 2016 Jean Jonathan
 */
 
 #include "sh.h"
@@ -14,12 +14,12 @@ void		handle_message(int status)
 {
   if (WTERMSIG(status) == SIGSEGV)
     {
-      write(2, "Segmentation Fault (core dumped)\n", 33);
+      write(2, "Segmentation fault\n", 33);
       exit(139);
     }
   else if (WTERMSIG(status) == SIGFPE)
     {
-      write(2, "Floating exception (core dumped)\n", 33);
+      write(2, "Floating exception\n", 33);
       exit(136);
     }
   else if (WTERMSIG(status) == SIGPIPE)
