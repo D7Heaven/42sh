@@ -5,24 +5,29 @@
 ** Login   <jeanj@epitech.net>
 **
 ** Started on  Tue Apr 12 14:34:45 2016 Jean Jonathan
-** Last update Tue May 31 16:22:48 2016 Remi
+** Last update Mon May 30 14:41:20 2016 Remi
 */
 
 #include "my.h"
 #include "sh.h"
 
-int     find_op(t_tree *tree, char *str, int end, char **ops)
+int		find_op(t_tree *tree, char *str, int end, char **ops)
 {
-  int   i;
-  int   j;
+  int		i;
+  int		j;
+  char		inhib;
 
   j = 0;
   while (j < MAX_OPS)
     {
       i = end - 1;
+      inhib = 0;
       while (i >= 0)
         {
-          if (my_strncmp(str + i, ops[j], my_strlen(ops[j])) == 0)
+	  if (*(str + i) == '\"')
+	    inhib++;
+          if ((my_strncmp(str + i, ops[j], my_strlen(ops[j])) == 0) &&
+	      inhib % 2 == 0)
             {
               if ((tree->str = malloc(sizeof(char)
                                       * my_strlen(ops[j] + 1))) == NULL)
@@ -37,7 +42,7 @@ int     find_op(t_tree *tree, char *str, int end, char **ops)
   return (-1);
 }
 
-void    free_tree(t_tree *tree)
+void		free_tree(t_tree *tree)
 {
   if (tree->left != NULL && tree->right != NULL)
     {
@@ -47,10 +52,10 @@ void    free_tree(t_tree *tree)
   free(tree);
 }
 
-void    check_redirect(t_tree *tree)
+void		check_redirect(t_tree *tree)
 {
-  char  **tmp;
-  int   i;
+  char		**tmp;
+  int		i;
 
   if ((my_strcmp(tree->str, ">") == 0 || my_strcmp(tree->str, ">>") == 0)
       && tree->left->str[0] == 0)
@@ -70,9 +75,9 @@ void    check_redirect(t_tree *tree)
     }
 }
 
-int     get_op_lenght(char *str, char **ops)
+int		get_op_lenght(char *str, char **ops)
 {
-  int   i;
+  int		i;
 
   i = 0;
   while (i < MAX_OPS)
@@ -84,10 +89,10 @@ int     get_op_lenght(char *str, char **ops)
   return (-1);
 }
 
-t_tree          *create_tree(t_tree *parent, char *str, char **ops, int end)
+t_tree		*create_tree(t_tree *parent, char *str, char **ops, int end)
 {
-  t_tree        *tree;
-  int           i;
+  t_tree	*tree;
+  int		i;
 
   if ((tree = malloc(sizeof(t_tree))) == NULL)
     return (NULL);
