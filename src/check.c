@@ -5,7 +5,7 @@
 ** Login   <jeanj@epitech.net>
 **
 ** Started on  Fri Jan  8 16:24:15 2016 JEAN Jonathan
-** Last update Fri Jun  3 12:17:53 2016 Jean Jonathan
+** Last update Fri Jun  3 13:40:42 2016 Jean Jonathan
 */
 
 #include "sh.h"
@@ -13,7 +13,7 @@
 
 int     not_found(t_sh *sh)
 {
-  my_setenv(&sh->env, "PATH", "/usr/bin");
+  my_setenv(&sh->env, "PATH", "/usr/bin:/bin");
   check_commands(sh, -1, NULL, NULL);
   my_unsetenv(&sh->env, "PATH", sh);
   return (1);
