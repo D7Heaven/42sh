@@ -5,7 +5,7 @@
 ** Login   <jeanj@epitech.net>
 **
 ** Started on  Sun Jan 31 21:18:18 2016 Jean Jonathan
-** Last update Mon May 30 17:54:43 2016 
+** Last update Fri Jun  3 11:56:12 2016 Jean Jonathan
 */
 
 #include "sh.h"
@@ -23,6 +23,8 @@ void    builtins_exit(t_sh *sh, int i)
         code = 0;
       freetab(sh->av);
     }
+  else if (my_getenv(sh->env, "?") != NULL)
+    code = my_getnbr(my_getenv(sh->env, "?"));
   else
     code = 0;
   my_delete_list(sh->env);

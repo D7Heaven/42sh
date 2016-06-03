@@ -5,7 +5,7 @@
 ** Login   <jeanj@epitech.net>
 **
 ** Started on  Tue Apr 12 15:15:13 2016 Jean Jonathan
-** Last update Tue May 31 16:05:04 2016 Remi
+** Last update Fri Jun  3 11:57:27 2016 Jean Jonathan
 */
 
 #include "sh.h"
@@ -99,7 +99,10 @@ int    son(t_sh *sh, char *path, char **e)
   if ((execve(path, sh->av, e)) == 0)
     my_delete_list(sh->env);
   else
-    return (my_printf("%s: Can't execute\n", sh->av[0]));
+    {
+      my_setenv(&sh->env, "?", "1");
+      return (my_printf("%s: Can't execute\n", sh->av[0]));
+    }
   return (0);
 }
 

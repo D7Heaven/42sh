@@ -1,11 +1,11 @@
 /*
-1;2802;0c** echo.c for  in /home/bedel_a/Projet/PSU/42sh
+** echo.c for  in /home/jeanj/Rendu/PSU_2015/42sh
 **
-** Made by
-** Login   <bedel_a@epitech.net>
+** Made by Jean Jonathan
+** Login   <jeanj@epitech.net>
 **
-** Started on  Tue May 31 15:26:33 2016
-** Last update Thu Jun  2 15:11:48 2016 
+** Started on  Fri Jun  3 12:17:26 2016 Jean Jonathan
+** Last update Fri Jun  3 12:17:27 2016 Jean Jonathan
 */
 
 #include "sh.h"
