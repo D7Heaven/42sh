@@ -5,7 +5,7 @@
 ** Login   <jeanj@epitech.net>
 **
 ** Started on  Tue Apr 12 15:15:13 2016 Jean Jonathan
-** Last update Fri Jun  3 14:04:03 2016 Jean Jonathan
+** Last update Sun Jun  5 16:53:34 2016 Remi
 */
 
 #include <errno.h>
@@ -68,7 +68,7 @@ void    dad(t_sh *sh, pid_t pid)
       close(sh->actual->piper_read->pipe[1]);
     }
   waitpid(pid, &status, 0);
-  if (WIFEXITED(status))
+  if (WEXITSTATUS(status) == 0)
       return_exec_success(sh);
   sprintf(buff, "%d", WEXITSTATUS(status));
   my_setenv(&sh->env, "?", buff);
