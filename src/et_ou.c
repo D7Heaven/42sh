@@ -5,13 +5,21 @@
 ** Login   <arnoulr@epitech.net>
 **
 ** Started on  Tue May 31 14:50:28 2016 Remi
-** Last update Tue May 31 16:17:58 2016 Remi
+** Last update Sun Jun  5 16:31:03 2016 Remi
 */
 
 #include "sh.h"
 
 int		return_exec_success(t_sh *sh)
 {
+  if (sh->actual->parent != NULL && sh->actual == sh->actual->parent->right)
+    {
+    while (sh->actual != NULL && my_strcmp(sh->actual->str, "||") != 0
+	 && my_strcmp(sh->actual->str, "&&") != 0)
+      sh->actual = sh->actual->parent;
+    if (sh->actual != NULL)
+      sh->actual = sh->actual->parent;
+    }
   while (sh->actual != NULL && my_strcmp(sh->actual->str, "||") != 0
 	 && my_strcmp(sh->actual->str, "&&") != 0)
       sh->actual = sh->actual->parent;
