@@ -5,7 +5,7 @@
 ** Login   <jeanj@epitech.net>
 **
 ** Started on  Tue Apr 12 14:29:16 2016 Jean Jonathan
-** Last update Fri Jun  3 12:20:41 2016 Jean Jonathan
+** Last update Tue Jun  7 15:23:42 2016 tonell_m
 */
 
 #include "my.h"
@@ -66,7 +66,10 @@ void    treat(t_sh *sh, char *buff)
       check_redirect(sh->tree);
       error_tree(sh->tree, sh);
       if (sh->error == 1)
-        my_printf("Parse error\n");
+	{
+	  my_printf("Invalid null command.\n");
+	  my_setenv(&sh->env, "?", "1");
+	}
       else
         exec_tree(sh->tree, sh);
       free_tree(sh->tree);
@@ -85,7 +88,7 @@ int	main(int ac, char *av[], char *e[])
   (void)av;
   my_init(&sh, e);
   my_memset(buff, 0, BUFF_SIZE);
-  while (my_strncmp(buff, "exit", 4) != 0)
+  while (my_strcmp(buff, "exit") != 0)
     {
       my_memset(buff, 0, BUFF_SIZE);
       print_prompt(&sh);
@@ -94,5 +97,5 @@ int	main(int ac, char *av[], char *e[])
       else
         builtins_exit(&sh, 1);
     }
-  return (1);
+  return (0);
 }

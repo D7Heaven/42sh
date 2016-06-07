@@ -5,7 +5,7 @@
 ** Login   <jeanj@epitech.net>
 **
 ** Started on  Mon May 30 16:35:16 2016 Jean Jonathan
-** Last update Fri Jun  3 12:14:40 2016 Jean Jonathan
+** Last update Tue Jun  7 15:15:44 2016 tonell_m
 */
 
 #include "sh.h"
@@ -50,16 +50,20 @@ int     init_builtins(t_sh *sh)
 int     check_builtins(t_sh *sh, char *name)
 {
   int   i;
+  char	**tab;
 
   i = 0;
+  if ((tab = my_cut_in_tab(name, ' ')) == NULL)
+    return (-1);
   while (i < 11)
     {
-      if (my_strncmp(sh->builtins[i], name, my_strlen(sh->builtins[i])) == 0)
+      if (strcmp(sh->builtins[i], tab[0]) == 0)
         {
           sh->builtins_ptr[i](sh);
           return (0);
         }
       i++;
     }
+  free_tab(tab);
   return (1);
 }

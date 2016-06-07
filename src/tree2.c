@@ -5,7 +5,7 @@
 ** Login   <jeanj@epitech.net>
 **
 ** Started on  Tue Apr 12 14:37:30 2016 Jean Jonathan
-** Last update Sun Jun  5 16:12:44 2016 Remi
+** Last update Tue Jun  7 15:15:24 2016 tonell_m
 */
 
 #include "sh.h"
@@ -26,7 +26,7 @@ void    exec_tree(t_tree *tree, t_sh *sh)
 {
   sh->actual = tree;
   sh->av = my_cut_in_tab(tree->str, ' ');
-  if (my_strncmp("exit", tree->str, 4) == 0)
+  if (my_strcmp("exit", sh->av[0]) == 0)
     builtins_exit(sh, 0);
   main_check(sh, tree->str, tree);
   if (tree->left != NULL && tree->right != NULL)
