@@ -5,7 +5,7 @@
 ** Login   <bedel_a@epitech.net>
 **
 ** Started on  Mon May 30 17:36:38 2016
-** Last update Fri Jun  3 13:48:36 2016 Jean Jonathan
+** Last update Tue Jun  7 17:54:35 2016 
 */
 
 #include "sh.h"
@@ -41,4 +41,23 @@ int	builtins_unsetenv(t_sh *sh)
   else
     my_printf("unsetenv [key]\n");
   return (0);
+}
+
+int	is_it_ok(char *str)
+{
+  int	i;
+
+  if (!((str[0] >= 'a' && str[0] <= 'z') ||
+	(str[0] >= 'A' && str[0] <= 'Z')))
+    return (-1);
+  i = 0;
+  while (str[i] != '\0')
+    {
+      if (!(str[i] == '.' ||
+	    ((str[i] >= 'a' && str[i] <= 'z') || (str[i] >= 'A' && str[i] <= 'Z')) ||
+	    (str[i] >= '0' && str[i] <= '9')))
+	return (-1);
+      i++;
+    }
+  return (1);
 }
