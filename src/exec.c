@@ -5,7 +5,7 @@
 ** Login   <jeanj@epitech.net>
 **
 ** Started on  Tue Apr 12 15:15:13 2016 Jean Jonathan
-** Last update Sun Jun  5 16:53:34 2016 Remi
+** Last update Tue Jun  7 16:19:01 2016 Remi
 */
 
 #include <errno.h>
@@ -62,12 +62,19 @@ void    dad(t_sh *sh, pid_t pid)
   char	buff[5];
 
   my_memset(buff, 0, 5);
-  if (sh->actual->piper_read!= NULL && sh->actual->fd[0] != 0)
+  if (sh->actual->piper_read != NULL && sh->actual->fd[0] != 0)
     {
       close(sh->actual->piper_read->pipe[0]);
       close(sh->actual->piper_read->pipe[1]);
     }
-  waitpid(pid, &status, 0);
+  if (sh->actual->piper_write != NULL)
+    waitpid(pid, &status, WNOHANG);
+  else
+    waitpid(pid, &status, 0);
+  if (sh->actual->fd[0] != 0)
+    close(sh->actual->fd[0]);
+  if (sh->actual->fd[1] != 1)
+    close(sh->actual->fd[1]);
   if (WEXITSTATUS(status) == 0)
       return_exec_success(sh);
   sprintf(buff, "%d", WEXITSTATUS(status));
