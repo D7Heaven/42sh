@@ -5,7 +5,7 @@
 ** Login   <jeanj@epitech.net>
 **
 ** Started on  Tue Apr 12 14:29:16 2016 Jean Jonathan
-** Last update Tue Jun  7 15:23:42 2016 tonell_m
+** Last update Tue Jun  7 15:57:30 2016 tonell_m
 */
 
 #include "my.h"
@@ -54,11 +54,9 @@ void    treat(t_sh *sh, char *buff)
 
   if (buff[my_strlen(buff) - 1] == '\n')
     buff[my_strlen(buff) - 1] = 0;
-  if (buff[0] == 0)
-    return;
   t = my_cut_in_tab(buff, '\n');
-  i = 0;
-  while (t[i] != NULL)
+  i = -1;
+  while (t[++i] != NULL)
     {
       sh->tree = create_tree(NULL, t[i], sh->ops, my_strlen(t[i]));
       add_history(sh, t[i]);
@@ -74,7 +72,6 @@ void    treat(t_sh *sh, char *buff)
         exec_tree(sh->tree, sh);
       free_tree(sh->tree);
       sh->tree = NULL;
-      i++;
     }
   freetab(t);
 }
