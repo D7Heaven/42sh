@@ -5,13 +5,14 @@
 ** Login   <jeanj@epitech.net>
 **
 ** Started on  Tue Apr 12 15:21:34 2016 Jean Jonathan
-** Last update Tue Jun  7 15:09:54 2016 tonell_m
+** Last update Fri Jun  3 17:13:44 2016 tonell_m
 */
 
 #ifndef PSU_2015_MINISHELL2_SH_H
 #define PSU_2015_MINISHELL2_SH_H
 
 #include <glob.h>
+#include <errno.h>
 #include <wait.h>
 #include <string.h>
 #include <stdlib.h>
