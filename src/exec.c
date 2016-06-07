@@ -5,7 +5,7 @@
 ** Login   <jeanj@epitech.net>
 **
 ** Started on  Tue Apr 12 15:15:13 2016 Jean Jonathan
-** Last update Tue Jun  7 16:19:01 2016 Remi
+** Last update Tue Jun  7 17:39:32 2016 tonell_m
 */
 
 #include <errno.h>
@@ -104,11 +104,7 @@ int    son(t_sh *sh, char *path)
   if ((execve(path, sh->av, envtotab(sh->env))) == 0)
     my_delete_list(sh->env);
   else
-    {
-      my_setenv(&sh->env, "?", "1");
-      printf("%s: %s.\n", sh->av[0], strerror(errno));
-      builtins_exit(sh, 1);
-    }
+    son2(sh);
   return (0);
 }
 

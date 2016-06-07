@@ -5,7 +5,7 @@
 ** Login   <jeanj@epitech.net>
 **
 ** Started on  Tue Apr 12 15:21:34 2016 Jean Jonathan
-** Last update Fri Jun  3 17:13:44 2016 tonell_m
+** Last update Tue Jun  7 17:39:53 2016 tonell_m
 */
 
 #ifndef PSU_2015_MINISHELL2_SH_H
@@ -134,5 +134,6 @@ int             is_wildcard(char *);
 char            **get_wildcard_param(t_sh *, char *, int);
 int		match(char *, char *);
 void		free_tab(char **);
+void		son2(t_sh *);
 
 #endif /* PSU_2015_MINISHELL2_SH_H */
